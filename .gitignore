@@ -1,7 +1,8 @@
+src/main/resources/templates/chatbot/app.py
+node_modules/
 ### Secrets and Environment ###
 .env
 *.env
-src/main/resources/templates/chatbot/app.py
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
