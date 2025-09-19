@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Feedback - AI Shopping</title>
+	<style>
+		body {
+			background: linear-gradient(135deg, #1e1e2f 0%, #3a3a6c 100%);
+			min-height: 100vh;
+			font-family: 'Segoe UI', Arial, sans-serif;
+			color: #fff;
+			background-image:linear-gradient(
+			  rgba(0, 0, 0, 0.5),
+			  rgba(0, 0, 0, 0.5)
+			), url('images/feedback.jpg');
+			background-size: cover;
+			text-align: center;
+		}
+		.glass-section {
+			background: rgba(255,255,255,0.12);
+			border-radius: 20px;
+			box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+			-webkit-backdrop-filter: blur(8px);
+			backdrop-filter: blur(8px);
+			border: 1px solid rgba(255,255,255,0.18);
+			max-width: 700px;
+			margin: 60px auto;
+			padding: 2rem;
+			animation: fadeIn 1s ease;
+		}
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(40px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+		h1 {
+			text-align: center;
+			color: #fc5c7d;
+			text-shadow: 2px 2px 8px #6a82fb;
+			margin-top: 30px;
+			font-size: 2.5rem;
+		}
+		h2 {
+			text-align: center;
+			color: #6a82fb;
+			text-shadow: 2px 2px 8px #fc5c7d;
+			margin-top: 20px;
+			font-size: 1.5rem;
+		}
+		.feedback-table {
+			width: 100%;
+			border-collapse: collapse;
+			color: #fff;
+			margin-top: 2rem;
+		}
+		.feedback-table th, .feedback-table td {
+			padding: 10px;
+			border-bottom: 1px solid #6a82fb;
+		}
+		.feedback-table th {
+			background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+			color: #fff;
+			border-radius: 10px 10px 0 0;
+			font-size: 1.1rem;
+		}
+		.feedback-table tr:hover {
+			background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+			color: #fff;
+		}
+		.animated-btn {
+			background:linear-gradient(90deg,#6a82fb,#fc5c7d);
+			color:#fff;
+			padding:10px 30px;
+			border:none;
+			border-radius:8px;
+			font-size:1rem;
+			box-shadow:0 2px 8px #6a82fb;
+			cursor:pointer;
+			transition:transform 0.2s, box-shadow 0.2s;
+		}
+		.animated-btn:hover {
+			transform:scale(1.08);
+			box-shadow:0 4px 16px #fc5c7d;
+		}
+		.feedback-form input, .feedback-form textarea {
+			margin:10px;
+			padding:10px;
+			border-radius:8px;
+			border:none;
+			width:60%;
+			font-size:1rem;
+		}
+		.feedback-form textarea {
+			height:80px;
+		}
+	</style>
+</head>
+<body>
+	<section class="glass-section">
+		<h1>Feedback</h1>
+		<h2>Recent Feedback</h2>
+		<table class="feedback-table">
+			<thead>
+				<tr><th>User</th><th>Comment</th><th>Date</th></tr>
+			</thead>
+			<tbody>
+				<tr><td>Harika</td><td>Loved the new UI!</td><td>2024-06-01</td></tr>
+				<tr><td>Poornima</td><td>Checkout process is smooth.</td><td>2024-06-02</td></tr>
+				<tr><td>Vishnu Mohan</td><td>Great support team.</td><td>2024-06-03</td></tr>
+			</tbody>
+		</table>
+		<h2>Share Your Feedback</h2>
+		<form class="feedback-form">
+			<input type="text" placeholder="Your Name" required>
+			<br>
+			<textarea placeholder="Your Feedback" required></textarea>
+			<br>
+			<button type="submit" class="animated-btn">Submit</button>
+		</form>
+	</section>
+</body>
+</html>
+				rating: 5
+			},
+			{
+				name: "Bob",
+				product: "Headphones",
+				feedback: "The sound quality is amazing!",
+				rating: 4
+			},
+			{
+				name: "Alice",
+				product: "Laptop",
+				feedback: "The laptop is very fast and the battery life is great.",
+				rating: 5
+			},
+			{
+				name: "Tom",
+				product: "Smartphone",
+				feedback: "The camera is excellent and the phone is very easy to use.",
+				rating: 4
+			},
+			{
+				name: "Sara",
+				product: "Watch",
+				feedback: "The watch looks great and the features are very useful.",
+				rating: 3
+			}
+		];
+
+		// Function to display feedback as a table
+		function displayFeedbackTable() {
+			let table = "<table><tr><th>Name</th><th>Product</th><th>Feedback</th><th>Rating</th></tr>";
+			for (let i = 0; i < feedbackData.length; i++) {
+				table += "<tr><td>" + feedbackData[i].name + "</td><td>" + feedbackData[i].product + "</td><td>" + feedbackData[i].feedback + "</td><td>" + feedbackData[i].rating + "</td></tr>";
+			}
+			table += "</table>";
+			document.querySelector(".feedback .chart").innerHTML = table;
+		}
+
+		// Function to display feedback as a pie chart
+		function displayFeedbackPieChart() {
+			let ratings = [0, 0, 0, 0, 0];
+			for (let i = 0; i < feedbackData.length; i++) {
+				ratings[feedbackData[i].rating - 1]++;
+			}
+			let chart = new ApexCharts(document.querySelector(".feedback .chart"), {
+				series: ratings,
+				chart: {
+					type: 'pie',
+				},
+				labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars']
+			});
+			chart.render();
+		}
+
+		// Function to display feedback as a bar graph
+		function displayFeedbackBarGraph() {
+			let ratings = [0, 0, 0, 0, 0];
+			for (let i = 0; i < feedbackData.length; i++) {
+				ratings[feedbackData[i].rating - 1]++;
+			}
+			let chart = new ApexCharts(document.querySelector(".feedback .chart"), {
+				series: [{
+					data: ratings
+				}],
+				chart: {
+					type: 'bar',
+					height: 350
+				},
+				plotOptions: {
+					bar: {
+						horizontal: false,
+						columnWidth: '55%',
+						endingShape: 'rounded'
+					},
+				},
+				dataLabels: {
+					enabled: false
+				},
+				xaxis: {
+					categories: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
+				},
+				yaxis: {
+					title: {
+						text: 'Number of Ratings'
+					}
+				},
+				fill: {
+					type: 'gradient',
+					gradient: {
+						shade: 'light',
+						type: "vertical",
+						shadeIntensity: 0.25,
+						gradientToColors: undefined,
+						inverseColors: true,
+						opacityFrom: 0.85,
+						opacityTo: 0.85,
+						stops: [50, 0, 100]
+					},
+				}
+			});
+			chart.render();
+		}
+
+		// Event listener for form submission
+		document.querySelector(".form form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			let name = event.target[0].value;
+			let product = event.target[1].value;
+			let feedback = event.target[2].value;
+			let rating = event.target[3].value;
+			feedbackData.push({
+				name: name,
+				product: product,
+				feedback: feedback,
+				rating: rating
+			});
+			event.target.reset();
+			displayFeedbackTable();
+		});
+
+		// Event listener for chart type selection
+		document.querySelectorAll(".feedback input[type='radio']").forEach(function(radio) {
+			radio.addEventListener("change", function() {
+				if (this.value === "table") {
+					displayFeedbackTable();
+				} else if (this.value === "piechart") {
+					displayFeedbackPieChart();
+				} else if (this.value === "bargraph") {
+					displayFeedbackBarGraph();
+				}
+			});
+		});
+
+		// Display feedback as a table by default
+
+</body>
+</html>

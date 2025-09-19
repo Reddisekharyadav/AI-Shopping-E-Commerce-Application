@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Shopping with Multi-Agent Support</title>
+   
+    <style>
+        .logout-btn {
+    width: 100%;
+    background: linear-gradient(90deg,#fc5c7d,#6a82fb);
+    color: #fff;
+    padding: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px #6a82fb;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.logout-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px #fc5c7d;
+}
+.cart-img {
+    width: 60px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #6a82fb;
+    transition: transform 0.2s;
+}
+.cart-img:hover {
+    transform: scale(1.12);
+    box-shadow: 0 4px 16px #fc5c7d;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+    .glass-card, .glass-section {
+        background: rgba(255,255,255,0.14);
+        border-radius: 24px;
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.37);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255,255,255,0.22);
+        margin: 40px auto;
+        padding: 2.5rem;
+        max-width: 900px;
+        animation: fadeIn 1.2s cubic-bezier(.68,-0.55,.27,1.55) both;
+.head {
+    background-color: #744f4f;
+    
+    background-size: cover;
+    background-position: center;
+    color: #de1414;
+    padding: 1rem 0;
+}
+.header h1{
+    color: #e21010;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.glass-card {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+
+.header {
+    background: linear-gradient(120deg, #6a82fb 0%, #fc5c7d 100%);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 2rem 0;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+
+.hero {
+    text-align: center;
+    padding: 5rem 0;
+    background: linear-gradient(120deg, #fc5c7d 0%, #6a82fb 100%);
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+    color: #fff;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+}
+
+.cta-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: #cbbcbc;
+    color: #fff;
+    padding: 1rem 0;
+    z-index: 1;
+    text-decoration-color: #4CAF50;
+
+}
+
+nav ul {
+    list-style:circle;
+    display: flex;
+    gap: 2rem;
+    justify-content:space-between;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+
+}
+
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 32px rgba(31, 38, 135, 0.17);
+}
+.feature {
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(31, 38, 135, 0.17);
+    padding: 2rem;
+    min-width: 220px;
+    max-width: 320px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.feature:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+.section{
+    padding: 80px 0;
+    text-align: center;
+}
+
+
+
+
+
+.footer {
+    background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 -4px 32px rgba(31, 38, 135, 0.17);
+}
+.topnav{
+background-color:#de1414;
+overflow: hidden;
+}
+.topnav a{
+float: left;
+    .animated-card {
+        animation: cardPop 0.9s cubic-bezier(.68,-0.55,.27,1.55) both;
+    }
+    @keyframes cardPop {
+        0% { transform: scale(0.7); opacity: 0; }
+        80% { transform: scale(1.12); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+    .section-transition {
+        animation: sectionFade 1.1s cubic-bezier(.68,-0.55,.27,1.55) both;
+    }
+    @keyframes sectionFade {
+        0% { opacity: 0; transform: translateY(80px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+display: block;
+color: #f2f2f2;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+font-size: 17px;
+
+}
+.topnav a:hover{
+background-color: #ddd;
+color: black;
+}
+.topnav a.active{
+background-color: #4CAF50;
+color: white;
+/* Removed stray closing brace to fix at-rule or selector error */
+    </style>
+</head>
+
+<body>
+    <header class=" header">
+        <div class="containers">
+            
+            <h1>NextGenKart</h1>
+            <nav>
+                <ul>
+                    
+                    <li><a href="#signin">Sign In</a></li>
+                    
+                    <li><a href="#feedback">Feedback</a></li>
+                    
+                    <li><a href="#product">products</a></li>
+                   
+                    <li><a href="#product">cartitems</a></li>
+                    
+                    <li><a href="#product">orderitems</a></li>
+                    <li><a href="#product">users</a></li>
+                    <li><a href="#product">wishlist</a></li>
+                    <li><a href="#product">product</a></li>
+                    <li><a href="#product">category</a></li>
+                    <li><a href="#product">review</a></li>
+                    <li><a href="#product">rating</a></li>
+                   
+            </nav>
+        </div>
+    
+    </header>
+     <section class="hero">
+        <div class="container">
+            <h1>Shop Smarter with AI</h1>
+            <p>Discover a new way of shopping with our AI-powered platform and multi-agent support.</p>
+            <a href="#features" class="cta-button">Learn More</a>
+        </div>
+     </section>
+
+     <section id="features" class="features">
+        <div class="container">
+            <div class="feature">
+                <h2>Personalized Recommendations</h2>
+                <p>Get personalized product recommendations based on your preferences and shopping history.</p>
+            </div>
+            <div class="feature">
+                <h2>Multi-Agent Support</h2>
+                <p>Our platform supports multiple agents to assist you in finding the best deals and products.</p>
+            </div>
+            <div class="feature">
+                <h2>Smart Shopping Assistance</h2>
+                <p>Receive real-time assistance from AI-powered agents to make informed purchasing decisions.</p>
+            </div>
+        </div>
+       
+
+        
+     </section>
+
+     <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 AI Shopping. All rights reserved.</p>
+        </div>
+     </footer>
+   
+</body>
+
+</html>

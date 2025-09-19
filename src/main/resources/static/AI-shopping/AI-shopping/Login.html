@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGenKart</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f 0%, #3a3a6c 100%);
+            min-height: 100vh;
+            color: #fff;
+            background-image: linear-gradient(
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.5)
+            ), url('images/login.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .glass-form {
+            background: rgba(255,255,255,0.12);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.18);
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2rem;
+            animation: fadeIn 1s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            width: 100%;
+            font-size: 1rem;
+        }
+        input[type="submit"] {
+            background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+        input[type="submit"]:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+        }
+        h1 {
+            text-align: center;
+            color: #fc5c7d;
+            text-shadow: 2px 2px 8px #6a82fb;
+            margin-top: 50px;
+            font-size: 3rem;
+        }
+        .login-table-section {
+            margin: 2rem auto;
+            max-width: 500px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            box-shadow: 0 4px 32px rgba(31, 38, 135, 0.17);
+            padding: 1rem;
+        }
+        .login-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+        }
+        .login-table th, .login-table td {
+            padding: 10px;
+            border-bottom: 1px solid #6a82fb;
+        }
+        .login-table th {
+            background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+            color: #fff;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.1rem;
+        }
+        .login-table tr:hover {
+            background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>NextGenKart</h1>
+   <!-- Set action to /login and method to POST -->
+     <form id="loginForm" class="glass-form" action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <input type="submit" value="Login">
+    </form>
+    <section class="login-table-section">
+        <h2 style="text-align:center;color:#6a82fb;">Recent Login Attempts</h2>
+        <table class="login-table">
+            <thead>
+                <tr><th>User</th><th>Status</th><th>Time</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>John</td><td>Success</td><td>2025-09-02 10:15</td></tr>
+                <tr><td>Jane</td><td>Failed</td><td>2025-09-02 09:55</td></tr>
+                <tr><td>Alex</td><td>Success</td><td>2025-09-01 18:30</td></tr>
+            </tbody>
+        </table>
+    </section>
+    <!-- <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Your login code here
+        // If login is successful, redirect to another page
+        window.location.href = 'home.html'; // replace 'home.html' with your desired page as needed
+    });
+    </script> -->
+</body>
+</html>

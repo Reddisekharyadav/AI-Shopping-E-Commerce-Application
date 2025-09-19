@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGenKart</title>
+    <style>
+      body {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)
+          ),
+          url('/AI-shopping/AI-shopping/images/cart.jpeg');
+        background-size: cover;
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        color: rgb(246, 28, 28);
+        text-align: center;
+        text-shadow: 2px 2px 5px rgb(228, 222, 222);
+        margin-top: 30px;
+      }
+      table {
+        background-color: rgb(230, 235, 235);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        width: 500px;
+        margin: 30px auto;
+      }
+      table th, table td {
+        padding: 10px;
+        text-align: center;
+      }
+      table th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      table tr:hover {
+        background-color: #ddd;
+      }
+      .delete-btn {
+        background-color: #d9534f;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .delete-btn:hover {
+        background-color: #c9302c;
+      }
+      .add-form {
+        width: 500px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      }
+      .add-form input[type="text"],
+      .add-form input[type="number"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      .add-form input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+      .add-form input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Shopping Cart</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <!-- Removed Image column as per requirement -->
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${cartItems}" th:data-id="${item.id}">
+          <td th:text="${item.productName}">Product Name</td>
+          <td th:text="${item.price}">Price</td>
+          <td>
+            <form th:action="@{/cart/delete}" method="post">
+              <input type="hidden" name="id" th:value="${item.id}" />
+              <input type="submit" value="Remove" class="delete-btn" />
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="add-form">
+      <h2 style="text-align: center;">Add a Product</h2>
+      <form th:action="@{/cart/add}" method="post">
+        <input type="text" name="productName" placeholder="Product Name" required /><br/>
+        <input type="number" step="0.01" name="price" placeholder="Price" required /><br/>
+        <input type="submit" value="Add Product" />
+      </form>
+    </div>
+  </body>
+</html>

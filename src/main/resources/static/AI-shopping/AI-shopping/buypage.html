@@ -1,0 +1,81 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Buy Page</title>
+     <style>
+            body {
+                background-image:linear-gradient(
+                    rgba(0, 0, 0, 0.75),
+                    rgba(0, 0, 0, 0.75)
+                ),
+                url('images/login.jpg');
+                background-size: cover;
+                background-size: cover;
+                background-position: center;
+                font-family: Arial, sans-serif;
+            }
+            form {
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+                max-width: 400px;
+                margin: 100px auto;
+            }
+            input[type="text"], input[type="password"] {
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                border: none;
+                width: 100%;
+                font-size: 16px;
+            }
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 15px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 16px;
+            }
+            input[type="submit"]:hover {
+                background-color: #3e8e41;
+            }
+            h1 {
+                text-align: center;
+                color: white;
+                text-shadow: 2px 2px 4px #000000;
+                margin-top: 50px;
+            }
+            p{
+                text-align: center;
+                color: white;
+                text-shadow: 2px 2px 4px #000000;
+                margin-top: 50px;
+            }
+     </style>
+</head>
+<body>
+	<h1>Buy Item</h1>
+	<p>Item Name: T-Shirt</p>
+	<p>Price: $20</p>
+
+	<form action="payment.php" method="post">
+		<label for="payment_method">Payment Method:</label>
+		<select id="payment_method" name="payment_method">
+			<option value="credit_card">Credit Card</option>
+			<option value="paypal">PayPal</option>
+			<option value="bitcoin">Bitcoin</option>
+		</select>
+
+		<label for="change_back">Change Back:</label>
+		<input type="checkbox" id="change_back" name="change_back" value="yes">
+
+		<input type="submit" value="Buy">
+	</form>
+</body>
+</html>

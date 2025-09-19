@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Dressing Room</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
+        #controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Virtual Dressing Room</h1>
+    <div id="controls">
+        <label for="user-image">Upload Your Image:</label>
+        <input type="file" id="user-image" accept="image/*">
+        <br><br>
+        <label for="clothing-image">Upload Clothing Image:</label>
+        <input type="file" id="clothing-image" accept="image/*">
+        <br><br>
+        <!-- Commenting out the item link input field as well -->
+        <!-- <label for="clothing-link">Clothing Item Link:</label> -->
+        <!-- <input type="url" id="clothing-link" placeholder="Enter clothing item URL"> -->
+        <button id="apply-clothing">Apply Clothing</button>
+    </div>
+    <div id="canvas-container">
+        <canvas id="3d-canvas"></canvas>
+    </div>
+
+    <script>
+        // Placeholder for 3D model rendering and clothing application logic
+        document.getElementById('apply-clothing').addEventListener('click', async () => {
+            const userImage = document.getElementById('user-image').files[0];
+            const clothingImage = document.getElementById('clothing-image').files[0];
+
+            if (!userImage || !clothingImage) {
+                alert('Please upload an image and provide a clothing link.');
+                return;
+            }
+
+            // Load the user's image
+            const imageBitmap = await createImageBitmap(userImage);
+
+            // Convert ImageBitmap to an HTMLImageElement using a canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = imageBitmap.width;
+            canvas.height = imageBitmap.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(imageBitmap, 0, 0);
+            const imageElement = new Image();
+            imageElement.src = canvas.toDataURL();
+
+            // Wait for the image to load before passing it to BodyPix
+            await new Promise((resolve) => {
+                imageElement.onload = resolve;
+            });
+
+            // Load BodyPix model for body segmentation
+            const net = await bodyPix.load();
+            const segmentation = await net.segmentPerson(imageElement);
+
+            // Create a Three.js scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 500, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('3d-canvas') });
+            renderer.setSize(window.innerWidth, 500);
+
+            // Add lighting
+            const light = new THREE.AmbientLight(0xffffff); // soft white light
+            scene.add(light);
+
+            // Create a plane geometry to represent the user's body
+            const bodyGeometry = new THREE.PlaneGeometry(2, 3);
+            const bodyTexture = new THREE.Texture(imageBitmap);
+            bodyTexture.needsUpdate = true;
+            const bodyMaterial = new THREE.MeshBasicMaterial({ map: bodyTexture, transparent: true });
+            const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            scene.add(bodyMesh);
+
+            // Load the clothing texture and overlay it on a separate plane
+            const clothingBitmap = await createImageBitmap(clothingImage);
+            const clothingTexture = new THREE.Texture(clothingBitmap);
+            clothingTexture.needsUpdate = true;
+            const clothingMaterial = new THREE.MeshBasicMaterial({ map: clothingTexture, transparent: true });
+            const clothingMesh = new THREE.Mesh(bodyGeometry, clothingMaterial);
+            clothingMesh.position.z = 0.01; // Slightly in front of the body mesh
+            scene.add(clothingMesh);
+
+            // Position the camera
+            camera.position.z = 5;
+
+            // Render the scene
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+        });
+    </script>
+</body>
+</html>
