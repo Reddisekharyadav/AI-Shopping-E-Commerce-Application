@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Orders</title>
+        <style>
+                body {
+                        background: #f7f7f7;
+                        font-family: Arial, sans-serif;
+                }
+                h1 {
+                        color: #db2727;
+                        text-align: center;
+                        margin-top: 30px;
+                }
+                table {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                        width: 700px;
+                        margin: 30px auto;
+                }
+                th, td {
+                        padding: 10px;
+                        text-align: center;
+                }
+                th {
+                        background-color: #4CAF50;
+                        color: white;
+                }
+                tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                }
+                tr:hover {
+                        background-color: #ddd;
+                }
+                .status {
+                        font-weight: bold;
+                }
+                /* Shared navbar styles */
+                #main-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    background: rgba(255,255,255,0.08);
+                    padding: 10px 32px;
+                    box-sizing: border-box;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                    border-bottom: 2px solid #db2727;
+                    position: relative;
+                    z-index: 10;
+                }
+                .header-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .site-title {
+                    font-size: 2.2rem;
+                    font-weight: bold;
+                    color: #db2727;
+                    margin-left: 18px;
+                    letter-spacing: 2px;
+                    text-shadow: 2px 2px 8px #fff;
+                }
+                .header-nav {
+                    display: flex;
+                    gap: 18px;
+                }
+                .nav-btn {
+                    color: #fff;
+                    text-decoration: none;
+                    display: block;
+                    padding: 12px 28px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    font-size: 1.08rem;
+                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+                    background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
+                    transition: background 0.3s, transform 0.2s;
+                }
+                .nav-btn:hover {
+                    background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
+                    transform: scale(1.08);
+                }
+                .header-right {
+                    position: relative;
+                    margin-left: 24px;
+                }
+                #profile-pic {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+                    border: 2px solid #43cea2;
+                }
+                .profile-menu {
+                    display: none;
+                    position: absolute;
+                    top: 60px;
+                    right: 0;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+                    min-width: 160px;
+                    padding: 12px 0;
+                }
+                .profile-menu a {
+                    display: block;
+                    padding: 12px 24px;
+                    color: #db2727;
+                    text-decoration: none;
+                    font-weight: 500;
+                    border-bottom: 1px solid #eee;
+                }
+                .profile-menu a:last-child {
+                    border-bottom: none;
+                }
+            .profile-menu a:hover {
+                background: #f7f7f7;
+            }
+            .status {
+                padding: 6px 12px;
+                border-radius: 8px;
+            }
+            .status.SAVED { background: #ffe082; color: #db2727; }
+            .status.COMPLETED { background: #c8e6c9; color: #388e3c; }
+            .status.CANCELLED { background: #ffcdd2; color: #d32f2f; }
+    </style>
+</head>
+<body>
+        <header id="main-header">
+            <div class="header-left">
+                <img id="logo" src="images/logo.png" alt="Logo">
+                <span class="site-title">NextGenKart</span>
+            </div>
+            <nav class="header-nav" aria-label="Main Navigation">
+                <a class="nav-btn" href="/">Home</a>
+                <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+                <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+                <a class="nav-btn" th:href="@{/help}">Help</a>
+            </nav>
+            <div class="header-right">
+                <img id="profile-pic" src="images/profile.png" alt="Profile" onclick="toggleProfileMenu()">
+                <div id="profile-menu" class="profile-menu">
+                    <a href="/cart">Cart</a>
+                    <a href="/orders">Orders</a>
+                    <a th:href="@{/Profile}">Profile</a>
+                    <a th:href="@{/feedback}">Feedback</a>
+                    <a th:href="@{/mrs}">Log Out</a>
+                </div>
+            </div>
+        </header>
+        <script>
+            function toggleProfileMenu() {
+                var menu = document.getElementById('profile-menu');
+                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            }
+            document.addEventListener('click', function(e) {
+                var menu = document.getElementById('profile-menu');
+                var profilePic = document.getElementById('profile-pic');
+                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        </script>
+    <h1>Your Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Payment Method</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.productName}">Product Name</td>
+                <td th:text="${order.price}">Price</td>
+                <td th:text="${order.color}">Color</td>
+                <td th:text="${order.size}">Size</td>
+                <td th:text="${order.paymentMethod}">Payment</td>
+                <td th:text="${order.status}" th:classappend="'status ' + ${order.status}">Status</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

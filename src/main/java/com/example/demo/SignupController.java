@@ -39,7 +39,7 @@ public class SignupController {
             boolean registered = authService.registerNewUser(username, password);
             if (registered) {
                 logger.info("User registered successfully: " + username);
-                return "redirect:/AI-shopping/AI-shopping/login.html?success=true";
+                return "Login";
             } else {
                 logger.warn("Registration failed for username: " + username);
                 return "redirect:/signup?error=registrationFailed";

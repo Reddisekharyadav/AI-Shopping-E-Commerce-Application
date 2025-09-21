@@ -12,14 +12,22 @@ import org.slf4j.LoggerFactory;
 @Controller
 public class LoginController {
     /**
+     * GET /Login endpoint: renders the Login page
+     */
+    @GetMapping("/Login")
+    public String showLoginPage() {
+        return "Login";
+    }
+
+    /**
      * Logout endpoint: clears session and redirects to home page
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         logger.info("User logging out and invalidating session");
         session.invalidate();
-        // Forward to static home page after logout
-        return "forward:/AI-shopping/AI-shopping/mrs.html";
+        // Forward to Thymeleaf template for logout page
+        return "mrs";
     }
 
     private final AuthService authService;
@@ -31,21 +39,22 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
-            @RequestParam String password) {
+            @RequestParam String password,
+            HttpSession session) {
         logger.info("POST /login endpoint hit with username: {}", username);
         if (!authService.userExists(username)) {
             logger.warn("User does not exist: {}", username);
-            return "Signup"; // This returns the Thymeleaf view from src/main/resources/templates/Signup.html
+            return "Signup";
         }
 
         if (authService.authenticate(username, password)) {
             logger.info("User authenticated successfully: {}", username);
-            // Redirect to the home page on successful login
-            return "redirect:/AI-shopping/AI-shopping/home.html";
+            // Store username in session for later use
+            session.setAttribute("username", username);
+            return "home";
         } else {
             logger.warn("Authentication failed for username: {}", username);
-            // Redirect back to login with an error parameter on failure
-            return "redirect:/AI-shopping/AI-shopping/login.html";
+            return "Login";
         }
     }
 }

@@ -1,3 +1,4 @@
+<!-- Migrated from static -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,6 +132,41 @@
     </style>
 </head>
 <body>
+    <header id="main-header">
+        <div class="header-left">
+            <img id="logo" src="./images/logo.jpg" alt="Logo">
+            <span class="site-title">NextGenKart</span>
+        </div>
+        <nav class="header-nav" aria-label="Main Navigation">
+            <a class="nav-btn" href="/">Home</a>
+            <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+            <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+            <a class="nav-btn" th:href="@{/help}">Help</a>
+        </nav>
+        <div class="header-right">
+            <img id="profile-pic" src="./images/profile.png" alt="Profile" onclick="toggleProfileMenu()">
+            <div id="profile-menu" class="profile-menu">
+                <a href="/cart">Cart</a>
+                <a href="/orders">Orders</a>
+                <a th:href="@{/Profile}">Profile</a>
+                <a th:href="@{/feedback}">Feedback</a>
+                <a th:href="@{/mrs}">Log Out</a>
+            </div>
+        </div>
+    </header>
+    <script>
+        function toggleProfileMenu() {
+            var menu = document.getElementById('profile-menu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('profile-menu');
+            var profilePic = document.getElementById('profile-pic');
+            if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
     <header>
         <div class="container">
             <nav>

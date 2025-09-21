@@ -88,7 +88,6 @@
       <thead>
         <tr>
           <th>Item</th>
-          <!-- Removed Image column as per requirement -->
           <th>Price</th>
           <th>Action</th>
         </tr>
@@ -98,10 +97,11 @@
           <td th:text="${item.productName}">Product Name</td>
           <td th:text="${item.price}">Price</td>
           <td>
-            <form th:action="@{/cart/delete}" method="post">
+            <form th:action="@{/cart/delete}" method="post" style="display:inline;">
               <input type="hidden" name="id" th:value="${item.id}" />
               <input type="submit" value="Remove" class="delete-btn" />
             </form>
+              <!-- Status and order actions removed: CartItem has no status field -->
           </td>
         </tr>
       </tbody>

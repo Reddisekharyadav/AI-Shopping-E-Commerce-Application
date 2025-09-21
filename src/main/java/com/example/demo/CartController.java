@@ -52,7 +52,7 @@ public class CartController {
     @GetMapping
     public String viewCart(Model model) {
         model.addAttribute("cartItems", cartService.getAllItems());
-        return "cart"; // Thymeleaf template at src/main/resources/templates/cart.html
+        return "Cart"; // Thymeleaf template at src/main/resources/templates/Cart.html
     }
 
     // Handle adding a new item

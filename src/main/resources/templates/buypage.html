@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Buy Page</title>
+        <style>
+                body { background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url('images/login.jpg'); background-size: cover; background-position: center; font-family: Arial, sans-serif; }
+                .buy-container { background-color: rgba(255,255,255,0.85); padding: 32px; border-radius: 18px; box-shadow: 0 0 16px #333; max-width: 420px; margin: 48px auto; }
+                h1 { text-align: center; color: #333; margin-bottom: 18px; }
+                .product-img { max-width: 180px; border-radius: 12px; box-shadow: 0 2px 12px #333; margin-bottom: 12px; }
+                .product-title { color: #333; font-size: 1.4rem; margin-bottom: 8px; }
+                .product-price { color: #333; font-size: 1.2rem; margin-bottom: 18px; }
+                label { display: block; margin-top: 12px; color: #222; }
+                select, input[type="submit"] { width: 100%; padding: 10px; margin-top: 6px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+                input[type="submit"] { background: linear-gradient(135deg,#43cea2 0%,#185a9d 100%); color: #fff; font-weight: bold; border: none; cursor: pointer; margin-top: 18px; }
+                input[type="submit"]:hover { background: linear-gradient(135deg,#185a9d 0%,#43cea2 100%); }
+                /* Shared navbar styles */
+                #main-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    background: rgba(255,255,255,0.08);
+                    padding: 10px 32px;
+                    box-sizing: border-box;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                    border-bottom: 2px solid #db2727;
+                    position: relative;
+                    z-index: 10;
+                }
+                .header-left {
+                    display: flex;
+                    align-items: center;
+                }
+                .site-title {
+                    font-size: 2.2rem;
+                    font-weight: bold;
+                    color: #db2727;
+                    margin-left: 18px;
+                    letter-spacing: 2px;
+                    text-shadow: 2px 2px 8px #fff;
+                }
+                .header-nav {
+                    display: flex;
+                    gap: 18px;
+                }
+                .nav-btn {
+                    color: #fff;
+                    text-decoration: none;
+                    display: block;
+                    padding: 12px 28px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    font-size: 1.08rem;
+                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+                    background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
+                    transition: background 0.3s, transform 0.2s;
+                }
+                .nav-btn:hover {
+                    background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
+                    transform: scale(1.08);
+                }
+                .header-right {
+                    position: relative;
+                    margin-left: 24px;
+                }
+                #profile-pic {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+                    border: 2px solid #43cea2;
+                }
+                .profile-menu {
+                    display: none;
+                    position: absolute;
+                    top: 60px;
+                    right: 0;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+                    min-width: 160px;
+                    padding: 12px 0;
+                }
+                .profile-menu a {
+                    display: block;
+                    padding: 12px 24px;
+                    color: #db2727;
+                    text-decoration: none;
+                    font-weight: 500;
+                    border-bottom: 1px solid #eee;
+                }
+                .profile-menu a:last-child {
+                    border-bottom: none;
+                }
+                .profile-menu a:hover {
+                    background: #f7f7f7;
+                }
+        </style>
+</head>
+<body>
+        <header id="main-header">
+            <div class="header-left">
+                <img id="logo" src="images/logo.png" alt="Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
+                <span class="site-title">NextGenKart</span>
+            </div>
+            <nav class="header-nav" aria-label="Main Navigation">
+                <a class="nav-btn" href="/">Home</a>
+                <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+                <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+                <a class="nav-btn" th:href="@{/help}">Help</a>
+            </nav>
+            <div class="header-right">
+                <img id="profile-pic" src="images/profile.png" alt="Profile" onclick="toggleProfileMenu()" style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;">
+                <div id="profile-menu" class="profile-menu" style="display:none;position:absolute;top:60px;right:0;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15);min-width:160px;padding:12px 0;">
+                    <a href="/cart">Cart</a>
+                    <a href="/orders">Orders</a>
+                    <a th:href="@{/Profile}">Profile</a>
+                    <a th:href="@{/feedback}">Feedback</a>
+                    <a th:href="@{/mrs}">Log Out</a>
+                </div>
+            </div>
+        </header>
+        <script>
+            function toggleProfileMenu() {
+                var menu = document.getElementById('profile-menu');
+                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            }
+            document.addEventListener('click', function(e) {
+                var menu = document.getElementById('profile-menu');
+                var profilePic = document.getElementById('profile-pic');
+                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        </script>
+            
+            
+        <div class="buy-container">
+        <h1>Buy Item</h1>
+        <div id="product-info"></div>
+        <form id="buy-form" th:action="@{/payment}" method="get">
+            <label for="color">Color:</label>
+            <select id="color" name="color" required>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+            </select>
+            <label for="size">Size:</label>
+            <select id="size" name="size" required>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">X-Large</option>
+            </select>
+            <label for="payment_method">Payment Method:</label>
+            <select id="payment_method" name="payment_method">
+                <option value="credit_card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="bitcoin">Bitcoin</option>
+            </select>
+            <input type="submit" value="Buy">
+        </form>
+    </div>
+    <script>
+    function getQueryParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name) || '';
+    }
+    const title = getQueryParam('title');
+    const price = getQueryParam('price');
+    const image = getQueryParam('image');
+    document.getElementById('product-info').innerHTML = `
+        <img src="${image}" alt="${title}" class="product-img" />
+        <div class="product-title">${title}</div>
+        <div class="product-price">Price: $${price}</div>
+    `;
+    document.getElementById('buy-form').addEventListener('submit', function(e) {
+        this.action = `/payment?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&image=${encodeURIComponent(image)}&color=${encodeURIComponent(document.getElementById('color').value)}&size=${encodeURIComponent(document.getElementById('size').value)}&payment_method=${encodeURIComponent(document.getElementById('payment_method').value)}`;
+    });
+    </script>
+</body>
+</html>
