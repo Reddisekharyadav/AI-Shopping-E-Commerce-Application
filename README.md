@@ -24,16 +24,77 @@ AI Shopping is a modern e-commerce web application built with Spring Boot, Thyme
 
 ## Project Structure
 ```
+AI-Shopping-E-Commerce-Application/
+├── database.db                           # SQLite database
+├── HELP.md                               # Spring Boot help documentation
+├── mvnw                                  # Maven wrapper (Unix)
+├── mvnw.cmd                              # Maven wrapper (Windows)
+├── package.json                          # Node.js dependencies (if any)
+├── pom.xml                               # Maven build configuration
+├── query                                 # SQL query files
+├── README.md                             # Project documentation
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/demo/         # Java source code (controllers, services, models)
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── demo/             # Java source code
+│   │   │               ├── DemoController.java      # Main controller
+│   │   │               ├── DemoApplication.java     # Main application class
+│   │   │               ├── LoginController.java     # Login/auth controller
+│   │   │               ├── SignupController.java    # User registration controller
+│   │   │               ├── User.java               # User entity model
+│   │   │               ├── UserRepository.java     # Data access layer
+│   │   │               └── UserService.java        # Business logic layer
 │   │   └── resources/
-│   │       ├── templates/                 # Thymeleaf HTML templates
-│   │       └── static/                    # Static assets (CSS, JS, images)
-│   └── test/java/com/example/demo/        # Test cases
-├── pom.xml                               # Maven build file
-├── application.properties                # Spring Boot configuration
-├── database.db                           # SQLite database (if used)
+│   │       ├── application.properties    # Spring Boot configuration
+│   │       ├── static/                   # Static web assets (CSS, JS, images)
+│   │       └── templates/                # Thymeleaf HTML templates
+│   │           ├── Aboutus.html          # About us page
+│   │           ├── ai_shopping.sql       # Database schema
+│   │           ├── buypage.html          # Product purchase page
+│   │           ├── Cart.html             # Shopping cart page
+│   │           ├── chatbot.html          # AI chatbot interface
+│   │           ├── Contact.html          # Contact page
+│   │           ├── feedback.html         # User feedback page
+│   │           ├── history.html          # Order history page
+│   │           ├── home.html             # Main homepage
+│   │           ├── Login.html            # User login page
+│   │           ├── mrs.html              # Product recommendation page
+│   │           ├── orderConfirmation.html # Order confirmation page
+│   │           ├── orders.html           # Orders management page
+│   │           ├── payment.html          # Payment processing page
+│   │           ├── Profile.html          # User profile page
+│   │           ├── Signup.html           # User registration page
+│   │           ├── virtualdressing.html  # Virtual try-on feature
+│   │           ├── chatbot/              # Chatbot related files
+│   │           │   └── app.py           # Python chatbot backend
+│   │           └── images/              # Image assets
+│   │               ├── AI backround earth.jpg
+│   │               ├── AI featuyte.jpg
+│   │               ├── backround.png
+│   │               ├── cart.jpeg
+│   │               ├── carthistory.jpg
+│   │               ├── contact.jpeg
+│   │               ├── feedback.jpg
+│   │               ├── home.png
+│   │               ├── login.jpg
+│   │               ├── logo.jpg
+│   │               ├── logoforshopping.png
+│   │               ├── profile.jpeg
+│   │               └── [other product images]
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── example/
+│                   └── demo/             # Test cases
+│                       └── DemoApplicationTests.java
+└── target/                              # Maven build output directory
+    ├── classes/                         # Compiled Java classes
+    ├── generated-sources/               # Generated source files
+    ├── maven-status/                    # Maven build status
+    ├── surefire-reports/               # Test reports
+    └── test-classes/                   # Compiled test classes
 ```
 
 ## Getting Started
