@@ -1,113 +1,165 @@
 <!-- Migrated from static -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NextGenKart</title>
+    <link rel="stylesheet" href="styles.css" th:href="@{/styles.css}">
     <style>
+        /* General styles */
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e1e2f 0%, #3a3a6c 100%);
-            min-height: 100vh;
-            color: #fff;
-            background-image: linear-gradient(
-                rgba(0, 0, 0, 0.5),
-                rgba(0, 0, 0, 0.5)
-            ), url('images/login.jpg');
-            background-size: cover;
-            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
         }
-        .glass-form {
-            background: rgba(255,255,255,0.12);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.18);
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 2rem;
-            animation: fadeIn 1s ease;
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #1e293b;
+            color: white;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
         }
-        input[type="text"], input[type="password"] {
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: none;
-            width: 100%;
-            font-size: 1rem;
+
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
         }
-        input[type="submit"] {
-            background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
-            color: #fff;
-            padding: 12px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
+
+        .header-nav a:hover {
+            color: #38bdf8;
         }
-        input[type="submit"]:hover {
-            transform: scale(1.08);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
-        }
-        h1 {
+
+        .recent-login-attempts {
             text-align: center;
-            color: #fc5c7d;
-            text-shadow: 2px 2px 8px #6a82fb;
-            margin-top: 50px;
-            font-size: 3rem;
+            color: #6a82fb;
         }
-        .login-table-section {
+
+        .glass-form {
             margin: 2rem auto;
-            max-width: 500px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            box-shadow: 0 4px 32px rgba(31, 38, 135, 0.17);
-            padding: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .login-table {
+
+        .glass-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .glass-form input[type="text"],
+        .glass-form input[type="password"] {
             width: 100%;
-            border-collapse: collapse;
-            color: #fff;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-        .login-table th, .login-table td {
-            padding: 10px;
-            border-bottom: 1px solid #6a82fb;
+
+        .glass-form input[type="submit"] {
+            width: 100%;
+            padding: 0.5rem;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        .login-table th {
-            background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
-            color: #fff;
-            border-radius: 10px 10px 0 0;
-            font-size: 1.1rem;
+
+        .glass-form input[type="submit"]:hover {
+            background: #38bdf8;
         }
-        .login-table tr:hover {
-            background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
-            color: #fff;
+
+        #profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #profile-pic:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
+    <script>
+        // Add animations using Framer Motion
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector(".glass-form");
+            form.style.opacity = 0;
+            form.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                form.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+                form.style.opacity = 1;
+                form.style.transform = "translateY(0)";
+            }, 100);
+        });
+    </script>
 </head>
 <body>
+    <!-- Updated navigation links for consistency -->
+    <header id="main-header">
+        <div class="header-left">
+            <img id="logo" th:src="@{/images/logo.jpg}" alt="Logo">
+            <span class="site-title">NextGenKart</span>
+        </div>
+        <nav class="header-nav" aria-label="Main Navigation">
+            <a class="nav-btn" th:href="@{/}">Home</a>
+            <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+            <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+            <a class="nav-btn" th:href="@{/help}">Help</a>
+            <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
+        </nav>
+        <div class="header-right">
+            <img id="profile-pic" th:src="@{/images/profile.jpeg}" alt="Profile">
+        </div>
+    </header>
+
     <h1>NextGenKart</h1>
-   <!-- Set action to /login and method to POST -->
-     <form id="loginForm" class="glass-form" action="/login" method="post">
+    
+    <!-- Success message for registration -->
+    <div th:if="${param.success}" style="background-color: #d4edda; color: #155724; padding: 1rem; margin: 1rem auto; max-width: 400px; border-radius: 8px; text-align: center; border: 1px solid #c3e6cb;">
+        <strong>Registration successful!</strong> You can now log in with your credentials.
+    </div>
+    
+    <!-- Set action to /login and method to POST -->
+    <form id="loginForm" class="glass-form" action="/login" method="post" th:action="@{/login}" th:method="post" th:object="${loginForm}">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <!-- Ensure the username field is properly bound to the model attribute -->
+        <input type="text" id="username" name="username" required th:field="*{username}" placeholder="Enter your username">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required th:field="*{password}">
         <input type="submit" value="Login">
     </form>
     <section class="login-table-section">
-        <h2 style="text-align:center;color:#6a82fb;">Recent Login Attempts</h2>
+        <h2 class="recent-login-attempts">Recent Login Attempts</h2>
         <table class="login-table">
             <thead>
                 <tr><th>User</th><th>Status</th><th>Time</th></tr>
@@ -119,13 +171,5 @@
             </tbody>
         </table>
     </section>
-    <!-- <script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Your login code here
-        // If login is successful, redirect to another page
-        window.location.href = 'home.html'; // replace 'home.html' with your desired page as needed
-    });
-    </script> -->
 </body>
 </html>

@@ -6,28 +6,33 @@
         <title>Orders</title>
         <style>
                 body {
-                        background: #f7f7f7;
-                        font-family: Arial, sans-serif;
+                        font-family: 'Poppins', sans-serif;
+                        background: linear-gradient(to right, #00c6ff, #0072ff);
+                        color: #333;
+                        margin: 0;
+                        padding: 0;
                 }
                 h1 {
-                        color: #db2727;
+                        color: #fff;
                         text-align: center;
                         margin-top: 30px;
+                        font-size: 2.5rem;
                 }
                 table {
                         background-color: #fff;
                         padding: 20px;
                         border-radius: 10px;
-                        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                        width: 700px;
+                        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                        width: 90%;
                         margin: 30px auto;
                 }
                 th, td {
-                        padding: 10px;
+                        padding: 15px;
                         text-align: center;
+                        font-size: 1rem;
                 }
                 th {
-                        background-color: #4CAF50;
+                        background-color: #0072ff;
                         color: white;
                 }
                 tr:nth-child(even) {
@@ -38,6 +43,7 @@
                 }
                 .status {
                         font-weight: bold;
+                        color: #0072ff;
                 }
                 /* Shared navbar styles */
                 #main-header {
@@ -135,23 +141,27 @@
 <body>
         <header id="main-header">
             <div class="header-left">
-                <img id="logo" src="images/logo.png" alt="Logo">
+                <img id="logo" src="./images/logo.png" alt="Logo">
                 <span class="site-title">NextGenKart</span>
             </div>
             <nav class="header-nav" aria-label="Main Navigation">
-                <a class="nav-btn" href="/">Home</a>
+                <a class="nav-btn" th:href="@{/home}">Home</a>
                 <a class="nav-btn" th:href="@{/Aboutus}">About</a>
                 <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
                 <a class="nav-btn" th:href="@{/help}">Help</a>
+                <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
             </nav>
             <div class="header-right">
-                <img id="profile-pic" src="images/profile.png" alt="Profile" onclick="toggleProfileMenu()">
+                <!-- Updated profile picture to use a button for accessibility -->
+                <button id="profile-pic" onclick="toggleProfileMenu()" onKeyPress="toggleProfileMenu()">
+                    <img src="./images/profile.png" alt="Profile">
+                </button>
                 <div id="profile-menu" class="profile-menu">
-                    <a href="/cart">Cart</a>
-                    <a href="/orders">Orders</a>
+                    <a th:href="@{/cart}">Cart</a>
+                    <a th:href="@{/orders}">Orders</a>
                     <a th:href="@{/Profile}">Profile</a>
                     <a th:href="@{/feedback}">Feedback</a>
-                    <a th:href="@{/mrs}">Log Out</a>
+                    <a th:href="@{/logout}">Log Out</a>
                 </div>
             </div>
         </header>
@@ -168,26 +178,22 @@
                 }
             });
         </script>
-    <h1>Your Orders</h1>
+    <h1>Confirmed Orders</h1>
     <table>
         <thead>
             <tr>
-                <th>Product</th>
+                <th>Order ID</th>
+                <th>Product Name</th>
                 <th>Price</th>
-                <th>Color</th>
-                <th>Size</th>
-                <th>Payment Method</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="order : ${orders}">
-                <td th:text="${order.productName}">Product Name</td>
-                <td th:text="${order.price}">Price</td>
-                <td th:text="${order.color}">Color</td>
-                <td th:text="${order.size}">Size</td>
-                <td th:text="${order.paymentMethod}">Payment</td>
-                <td th:text="${order.status}" th:classappend="'status ' + ${order.status}">Status</td>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.productName}"></td>
+                <td th:text="${order.price}"></td>
+                <td th:text="${order.status}"></td>
             </tr>
         </tbody>
     </table>

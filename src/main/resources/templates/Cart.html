@@ -4,115 +4,145 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NextGenKart</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
       body {
-        background-image: linear-gradient(
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.5)
-          ),
-          url('/AI-shopping/AI-shopping/images/cart.jpeg');
-        background-size: cover;
-        font-family: Arial, sans-serif;
+        font-family: 'Lato', sans-serif;
+        background: linear-gradient(to right, #ffafbd, #ffc3a0);
+        color: #333;
+        margin: 0;
+        padding: 0;
       }
       h1 {
-        font-size: 3.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1rem;
-        color: rgb(246, 28, 28);
         text-align: center;
-        text-shadow: 2px 2px 5px rgb(228, 222, 222);
-        margin-top: 30px;
+        color: #333;
+        margin-top: 20px;
+      }
+      nav {
+        display: flex;
+        justify-content: center;
+        background: #333;
+        padding: 1rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        margin: 0 1rem;
+      }
+      nav a:hover {
+        text-decoration: underline;
       }
       table {
-        background-color: rgb(230, 235, 235);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        width: 500px;
-        margin: 30px auto;
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
-      table th, table td {
-        padding: 10px;
+      th, td {
+        padding: 15px;
         text-align: center;
+        border-bottom: 1px solid #ddd;
       }
-      table th {
-        background-color: #4CAF50;
+      th {
+        background: #ffafbd;
         color: white;
       }
-      table tr:nth-child(even) {
-        background-color: #f2f2f2;
-      }
-      table tr:hover {
-        background-color: #ddd;
+      tr:hover {
+        background: #f9f9f9;
       }
       .delete-btn {
-        background-color: #d9534f;
-        border: none;
+        background: #ff5e62;
         color: white;
-        padding: 5px 10px;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
         cursor: pointer;
       }
       .delete-btn:hover {
-        background-color: #c9302c;
+        background: #ffafbd;
       }
       .add-form {
-        width: 500px;
-        margin: 30px auto;
-        background: #fff;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
-      .add-form input[type="text"],
-      .add-form input[type="number"] {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin-bottom: 10px;
+      .add-form input[type="text"] {
+        width: calc(100% - 2rem);
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
       }
-      .add-form input[type="submit"] {
-        width: 100%;
-        padding: 10px;
-        background-color: #007BFF;
-        border: none;
+      .add-form button {
+        background: #ff5e62;
         color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
         cursor: pointer;
       }
-      .add-form input[type="submit"]:hover {
-        background-color: #0056b3;
+      .add-form button:hover {
+        background: #ffafbd;
+      }
+      .buy-btn {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .buy-btn:hover {
+        background: #45a049;
       }
     </style>
   </head>
   <body>
     <h1>Shopping Cart</h1>
+    <nav>
+      <a th:href="@{/orders/all}">Orders</a>
+    </nav>
+    <h1>Cart Items</h1>
     <table>
       <thead>
         <tr>
-          <th>Item</th>
+          <th>Product Name</th>
           <th>Price</th>
-          <th>Action</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="item : ${cartItems}" th:data-id="${item.id}">
-          <td th:text="${item.productName}">Product Name</td>
-          <td th:text="${item.price}">Price</td>
+        <tr th:each="item : ${cartItems}">
+          <td th:text="${item.productName}"></td>
+          <td th:text="${item.price}"></td>
           <td>
-            <form th:action="@{/cart/delete}" method="post" style="display:inline;">
-              <input type="hidden" name="id" th:value="${item.id}" />
-              <input type="submit" value="Remove" class="delete-btn" />
+            <form th:action="@{/cart/delete}" method="post">
+              <input type="hidden" th:value="${item.id}" name="id" />
+              <button type="submit" class="delete-btn">Delete</button>
             </form>
-              <!-- Status and order actions removed: CartItem has no status field -->
+            <form th:action="@{/buypage}" method="get">
+              <input type="hidden" th:value="${item.productName}" name="title" />
+              <input type="hidden" th:value="${item.price}" name="price" />
+              <button type="submit" class="buy-btn">Buy</button>
+            </form>
           </td>
         </tr>
       </tbody>
     </table>
     
     <div class="add-form">
-      <h2 style="text-align: center;">Add a Product</h2>
+      <h2 class="add-product-title">Add a Product</h2>
       <form th:action="@{/cart/add}" method="post">
         <input type="text" name="productName" placeholder="Product Name" required /><br/>
         <input type="number" step="0.01" name="price" placeholder="Price" required /><br/>
-        <input type="submit" value="Add Product" />
+        <input type="submit" value="Add to Cart" />
       </form>
     </div>
   </body>

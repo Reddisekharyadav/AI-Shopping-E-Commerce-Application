@@ -1,136 +1,178 @@
 <!-- Migrated from static -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Contact - AI Shopping</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <style>
+      /* General styles */
       body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background: linear-gradient(135deg, #1e1e2f 0%, #3a3a6c 100%);
-        min-height: 100vh;
-        color: #fff;
-        background-image:linear-gradient(
-          rgba(0, 0, 0, 0.5),
-          rgba(0, 0, 0, 0.5)
-        ), url('images/contact.jpeg');
-        background-size: cover;
-        text-align: center;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
       }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: #1e293b;
+        color: white;
+      }
+
+      .header-left, .header-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 1rem;
+        transition: color 0.3s;
+      }
+
+      .header-nav a:hover {
+        color: #38bdf8;
+      }
+
       .glass-section {
-  background: rgba(255,255,255,0.12);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.18);
-  max-width: 700px;
-  margin: 60px auto;
-  padding: 2rem;
-  animation: fadeIn 1s ease;
+        margin: 2rem auto;
+        padding: 2rem;
+        max-width: 800px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(40px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      h1 {
-        text-align: center;
-        color: #fc5c7d;
-        text-shadow: 2px 2px 8px #6a82fb;
-        margin-top: 30px;
-        font-size: 2.5rem;
-      }
-      h2 {
-        text-align: center;
-        color: #6a82fb;
-        text-shadow: 2px 2px 8px #fc5c7d;
-        margin-top: 20px;
-        font-size: 1.5rem;
-      }
+
       .contact-table {
         width: 100%;
         border-collapse: collapse;
-        color: #fff;
-        margin-top: 2rem;
+        margin: 1rem 0;
       }
+
       .contact-table th, .contact-table td {
-        padding: 10px;
-        border-bottom: 1px solid #6a82fb;
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+        text-align: left;
       }
+
       .contact-table th {
-        background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
-        color: #fff;
-        border-radius: 10px 10px 0 0;
-        font-size: 1.1rem;
+        background: #1e293b;
+        color: white;
       }
-      .contact-table tr:hover {
-        background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
-        color: #fff;
+
+      .contact-table tr:nth-child(even) {
+        background: #f9fafb;
+      }
+
+      .error-message {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      #logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-left: 1rem;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #profile-pic:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
     </style>
   </head>
   <body>
       <header id="main-header">
         <div class="header-left">
-          <img id="logo" src="./images/logo.jpg" alt="Logo">
+          <img id="logo" src="/images/logo.jpg" alt="Logo">
           <span class="site-title">NextGenKart</span>
         </div>
+        <!-- Updated navigation links for consistency -->
         <nav class="header-nav" aria-label="Main Navigation">
-          <a class="nav-btn" href="/">Home</a>
+          <a class="nav-btn" th:href="@{/home}">Home</a>
           <a class="nav-btn" th:href="@{/Aboutus}">About</a>
           <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
           <a class="nav-btn" th:href="@{/help}">Help</a>
+          <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
         </nav>
         <div class="header-right">
-          <img id="profile-pic" src="./images/profile.jpg" alt="Profile" onclick="toggleProfileMenu()">
-          <div id="profile-menu" class="profile-menu">
-            <a href="/cart">Cart</a>
-            <a href="/orders">Orders</a>
-            <a th:href="@{/Profile}">Profile</a>
-            <a th:href="@{/feedback}">Feedback</a>
-            <a th:href="@{/mrs}">Log Out</a>
+            <div id="profile-menu" th:if="${#authentication != null && #authentication.principal != null}" class="profile-menu">
+              <a th:href="@{/cart}">Cart</a>
+              <a th:href="@{/orders}">Orders</a>
+              <a th:href="@{/Profile}">Profile</a>
+              <a th:href="@{/feedback}">Feedback</a>
+              <a th:href="@{/logout}">Log Out</a>
+            </div>
+            <div id="profile-menu" th:if="${#authentication == null || #authentication.principal == null}" class="profile-menu">
+              <p>Please log in to access your profile menu.</p>
+            </div>
+            <img id="profile-pic" th:src="@{/images/profile.jpeg}" alt="Profile">
           </div>
+        </header>
+      <section class="glass-section">
+        <h1>Contact Us</h1>
+        <div th:if="${#authentication == null || #authentication.principal == null}" class="error-message">
+          <p>You need to log in to access the Contact page.</p>
         </div>
-      </header>
+        <h2>Our Team</h2>
+        <table class="contact-table">
+          <thead>
+            <tr><th>Name</th><th>Role</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>M.Reddi Sekhar</td><td>Admin</td></tr>
+            <tr><td>MUNI</td><td>Multi-Agent 1</td></tr>
+            <tr><td>Anjali</td><td>Multi-Agent 2</td></tr>
+            <tr><td>Vishnu Mohan</td><td>Shipping Management</td></tr>
+          </tbody>
+        </table>
+        <h2>Contact Details</h2>
+        <table class="contact-table">
+          <thead>
+            <tr><th>Type</th><th>Details</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Email</td><td>reddisekharmarugani@gmail.com</td></tr>
+            <tr><td>Phone</td><td>9346414887</td></tr>
+            <tr><td>Office Hours</td><td>Mon-Fri, 9am-5pm EST</td></tr>
+          </tbody>
+        </table>
+      </section>
       <script>
-        function toggleProfileMenu() {
-          var menu = document.getElementById('profile-menu');
-          menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
-        document.addEventListener('click', function(e) {
-          var menu = document.getElementById('profile-menu');
-          var profilePic = document.getElementById('profile-pic');
-          if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
-            menu.style.display = 'none';
-          }
+        // Add animations using Framer Motion
+        document.addEventListener("DOMContentLoaded", () => {
+          const sections = document.querySelectorAll(".glass-section");
+          sections.forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = "translateY(20px)";
+            setTimeout(() => {
+              section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+              section.style.opacity = 1;
+              section.style.transform = "translateY(0)";
+            }, 100);
+          });
         });
       </script>
-    <section class="glass-section">
-      <h1>Contact Us</h1>
-      <h2>Our Team</h2>
-      <table class="contact-table">
-        <thead>
-          <tr><th>Name</th><th>Role</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>M.Reddi Sekhar</td><td>Admin</td></tr>
-          <tr><td>Harika</td><td>Multi-Agent 1</td></tr>
-          <tr><td>Poornima</td><td>Multi-Agent 2</td></tr>
-          <tr><td>Vishnu Mohan</td><td>Shipping Management</td></tr>
-        </tbody>
-      </table>
-      <h2>Contact Details</h2>
-      <table class="contact-table">
-        <thead>
-          <tr><th>Type</th><th>Details</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Email</td><td>reddisekharmarugani@gmail.com</td></tr>
-          <tr><td>Phone</td><td>9346414887</td></tr>
-          <tr><td>Office Hours</td><td>Mon-Fri, 9am-5pm EST</td></tr>
-        </tbody>
-      </table>
-    </section>
-  </body>
-</html>
+    </body>
+  </html>

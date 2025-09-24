@@ -6,16 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Shopping Chatbot</title>
     <style>
-        #chatbox {
-            width: 100;
-            height: 40px;
-            border: 1px solid #000;
-            padding: 10px;
-            overflow-y: scroll;
-            text-align: center;
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
         }
+
+        h1 {
+            text-align: center;
+            color: #1e293b;
+        }
+
+        #chatbox {
+            width: 80%;
+            height: 300px;
+            margin: 1rem auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            overflow-y: scroll;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         #userInput {
-            width: 100;
+            width: 70%;
+            padding: 0.5rem;
+            margin: 1rem auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #sendButton {
+            padding: 0.5rem 1rem;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #sendButton:hover {
+            background: #38bdf8;
         }
     </style>
 </head>
@@ -46,5 +81,17 @@ document.getElementById('sendButton').onclick = async function() {
     }
     document.getElementById('userInput').value = '';
 };
+
+  // Add animations using Framer Motion
+  document.addEventListener("DOMContentLoaded", () => {
+    const chatbox = document.getElementById("chatbox");
+    chatbox.style.opacity = 0;
+    chatbox.style.transform = "translateY(20px)";
+    setTimeout(() => {
+      chatbox.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+      chatbox.style.opacity = 1;
+      chatbox.style.transform = "translateY(0)";
+    }, 100);
+  });
 </script>
 </html>

@@ -1,53 +1,85 @@
 package com.example.demo;
 
 import org.springframework.stereotype.Service;
-import jakarta.annotation.PostConstruct;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class AuthService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // Constructor to initialize userRepository
     public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        logger.info("AuthService initialized with UserRepository and BCryptPasswordEncoder");
     }
-
-    // This in-memory map simulates a database (for demo purposes only)
-    private Map<String, String> users = new ConcurrentHashMap<>();
-
-    // @PostConstruct
-    // public void initialize() {
-    // // Seed a specific user to the "database"
-    // // You can change "user1" and "pass1" to your desired credentials
-    // registerNewUser("mango", "mango143");
-    // }
 
     // Registers a new user if they do not already exist
     public boolean registerNewUser(String username, String password) {
-        if (userRepository.existsByUsername(username)) {
-            return false; // User already exists
+        try {
+            logger.info("Attempting to register new user: {}", username);
+
+            if (username == null || username.trim().isEmpty()) {
+                logger.error("Registration failed: Username is null or empty");
+                return false;
+            }
+
+            if (password == null || password.trim().isEmpty()) {
+                logger.error("Registration failed: Password is null or empty");
+                return false;
+            }
+
+            if (userRepository.existsByUsername(username)) {
+                logger.warn("Registration failed: User {} already exists", username);
+                return false; // User already exists
+            }
+
+            User newUser = new User();
+            newUser.setUsername(username.trim());
+            newUser.setPassword(passwordEncoder.encode(password)); // Hash the password
+
+            User savedUser = userRepository.save(newUser);
+            logger.info("User {} registered successfully with ID: {}", username, savedUser.getId());
+            return true;
+
+        } catch (Exception e) {
+            logger.error("Exception occurred while registering user {}: ", username, e);
+            return false;
         }
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password); // Consider hashing the password
-        userRepository.save(newUser);
-        return true;
     }
 
     // Returns true if the user already exists
     public boolean userExists(String username) {
-        return userRepository.existsByUsername(username);
+        try {
+            boolean exists = userRepository.existsByUsername(username);
+            logger.debug("User {} exists: {}", username, exists);
+            return exists;
+        } catch (Exception e) {
+            logger.error("Exception occurred while checking if user {} exists: ", username, e);
+            return false;
+        }
     }
 
     // Authenticates the user by checking if the password matches
     public boolean authenticate(String username, String password) {
-        User user = userRepository.findByUsername(username).orElse(null);
-        if (user != null && user.getPassword().equals(password)) {
-            return true;
+        try {
+            logger.info("Attempting to authenticate user: {}", username);
+            User user = userRepository.findByUsername(username).orElse(null);
+            if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+                logger.info("Authentication successful for user: {}", username);
+                return true;
+            }
+            logger.warn("Authentication failed for user: {}", username);
+            return false;
+        } catch (Exception e) {
+            logger.error("Exception occurred while authenticating user {}: ", username, e);
+            return false;
         }
-        return false;
     }
 }

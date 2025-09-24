@@ -148,15 +148,18 @@
                     position: relative;
                     margin-left: 24px;
                 }
-                #profile-pic {
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    cursor: pointer;
-                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
-                    border: 2px solid #43cea2;
-                }
+                /* Consolidated styles for #profile-pic */
+        #profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+            border: 2px solid #43cea2;
+            background: none;
+        }
                 .profile-menu {
                     display: none;
                     position: absolute;
@@ -282,11 +285,6 @@
             text-transform: uppercase;
             text-shadow: 2px 2px 4px #ef0e0e;
         }
-        .product img {
-            max-width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
         #navbar-icon {
             cursor: pointer;
         }
@@ -361,44 +359,112 @@
             transform: scale(1.07);
             box-shadow: 0 2px 8px rgba(24,90,157,0.18);
         }
+        /* Adjusted styles for profile and logo images */
+  #logo {
+    width: 100px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+
+  /* Sidebar styles */
+  #profile-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #1e293b;
+    color: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  #profile-sidebar header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #111827;
+    border-bottom: 1px solid #374151;
+  }
+
+  #profile-sidebar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+  }
+
+  #profile-sidebar button:hover {
+    transform: scale(1.1);
+    color: #38bdf8;
+  }
+
+  #profile-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #profile-sidebar ul li {
+    padding: 0;
+    border: none;
+  }
+
+  /* Consolidated styles for sidebar links */
+  #profile-sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    pointer-events: auto;
+    z-index: 10;
+  }
+
+  /* Button hover effect */
+  button:hover {
+    background-color: #4CAF50; /* Green background on hover */
+    color: white; /* White text on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+    transition: all 0.3s ease; /* Smooth transition */
+  }
+
+  /* Sidebar button hover effect */
+  #profile-sidebar ul li a:hover {
+    background-color: #4CAF50; /* Green background on hover */
+    color: white; /* White text on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+    transition: all 0.3s ease; /* Smooth transition */
+  }
     </style>
 </head>
 <body>
         <header id="main-header">
             <div class="header-left">
-                <img id="logo" src="/src/main/resources/templates/images/logo.jpg" alt="Logo">
+                <img id="logo" src="images/logo.jpg" alt="Logo">
                 <span class="site-title">NextGenKart</span>
             </div>
-            <nav class="header-nav">
-                <a class="nav-btn" href="/">Home</a>
-                    <a class="nav-btn" th:href="@{/Aboutus}">About</a>
-                    <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
-                    <a class="nav-btn" th:href="@{/help}">Help</a>
+            <nav class="header-nav" aria-label="Main Navigation">
+                <a class="nav-btn" th:href="@{/home}">Home</a>
+                <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+                <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+                <a class="nav-btn" th:href="@{/help}">Help</a>
+                <a class="nav-btn" th:href="@{/orders/all}">Orders</a> <!-- New Orders link -->
             </nav>
             <div class="header-right">
-                <img id="profile-pic" src="/src/main/resources/templates/images/profile.jpeg" alt="Profile" onclick="toggleProfileMenu()">
-                <div id="profile-menu" class="profile-menu">
-                    <a href="/cart">Cart</a>
-                    <a href="/orders">Orders</a>
-                        <a th:href="@{/Profile}">Profile</a>
-                        <a th:href="@{/feedback}">Feedback</a>
-                        <a th:href="@{/mrs}">Log Out</a>
-                </div>
+                <button id="profile-pic" onKeyPress="toggleProfileMenu()" title="Open profile menu" aria-label="Open profile menu">
+                    <span class="sr-only">Open profile menu</span>
+                </button>
+                
             </div>
         </header>
-        <script>
-            function toggleProfileMenu() {
-                var menu = document.getElementById('profile-menu');
-                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            }
-            document.addEventListener('click', function(e) {
-                var menu = document.getElementById('profile-menu');
-                var profilePic = document.getElementById('profile-pic');
-                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
-                    menu.style.display = 'none';
-                }
-            });
-        </script>
 
         </div>
         <form id="header-form">
@@ -409,171 +475,108 @@
 
     
     <!-- Category Navigation Bar -->
-    <nav id="category-nav">
+    <nav id="category-nav" aria-label="Product Categories">
         <ul>
-            <li class="category-btn" data-category="clothes">Clothes</li>
-            <li class="category-btn" data-category="electronics">Electronics</li>
-            <li class="category-btn" data-category="jewelery">Jewelry</li>
-            <li class="category-btn" data-category="kitchen">Kitchen Items</li>
-        </ul>
-    <!-- Subcategory Bar for Clothes -->
-    <nav id="subcategory-nav" style="display:none;">
-        <ul>
-            <li class="subcategory-btn" data-subcategory="children">Children</li>
-            <li class="subcategory-btn" data-subcategory="men">Men</li>
-            <li class="subcategory-btn" data-subcategory="women">Women</li>
-            <li class="subcategory-btn" data-subcategory="girl">Girl</li>
-            <li class="subcategory-btn" data-subcategory="boy">Boy</li>
+            <li th:each="category : ${categories}" class="category-btn">
+                <a th:href="@{/products/{category}(category=${category})}">
+                    <span th:text="${category}"></span>
+                </a>
+            </li>
         </ul>
     </nav>
 
+    <!-- Subcategory Navigation Bar -->
+    <nav id="subcategory-nav" th:if="${selectedCategory == 'clothes'}" aria-label="Clothing Subcategories">
+        <ul>
+            <li th:each="subcategory : ${subcategories}" class="subcategory-btn">
+                <a th:href="@{/products/{subcategory}(subcategory=${subcategory})}">
+                    <span th:text="${subcategory}"></span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Product Rendering -->
+    <div th:if="${products != null && !products.isEmpty()}" id="products">
+        <div th:each="product : ${products}" class="product">
+            <img th:src="${product.image}" th:alt="${product.title != null ? product.title + ' image' : 'Product image'}" title="${product.title != null ? product.title : 'Product'}" />
+            <h2 th:text="${product.title != null ? product.title : 'Unnamed Product'}" aria-label="Product Title: ${product.title != null ? product.title : 'Unnamed Product'}">
+                <span th:text="${product.title != null ? product.title : 'Unnamed Product'}" class="sr-only">Product Title: ${product.title != null ? product.title : 'Unnamed Product'}</span>
+            </h2>
+            <p th:text="'Price: $' + ${product.price}"></p>
+            <a th:href="@{/buypage(title=${product.title != null ? product.title : 'Unnamed Product'}, price=${product.price}, image=${product.image})}" class="buy-btn">Buy</a>
+            <form th:action="@{/cart/add}" method="post">
+                <input type="hidden" name="productName" th:value="${product.title != null ? product.title : 'Unnamed Product'}" />
+                <input type="hidden" name="price" th:value="${product.price}" />
+                <button type="submit" class="add-cart-btn">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+    <div th:if="${products == null || products.isEmpty()}" class="no-products">
+        <p>No products available at the moment. Please check back later.</p>
+    </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Category click handler
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Show subcategory bar only for clothes
-                    if (btn.dataset.category === 'clothes') {
-                        document.getElementById('subcategory-nav').style.display = 'block';
-                    } else {
-                        document.getElementById('subcategory-nav').style.display = 'none';
-                    }
-                    loadProducts(btn.dataset.category);
-                });
-            });
-            // Subcategory click handler (only fetch for clothes)
-            document.querySelectorAll('.subcategory-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    loadProducts('clothes', btn.dataset.subcategory);
-                });
-            });
-        });
+        function toggleProfileMenu() {
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu.style.display === 'none' || profileMenu.style.display === '') {
+                profileMenu.style.display = 'block';
+            } else {
+                profileMenu.style.display = 'none';
+            }
+        }
     </script>
-
-    
-
-
-    <h2 style="color:#fff;text-align:center;font-size:2.2rem;margin-top:32px;text-shadow:2px 2px 8px #db2727;">Featured Products</h2>
-    <div id="products"></div>
-
-    <script>
-    // Map UI categories to Fake Store API categories
-    const categoryMap = {
-        clothes: "men's clothing",
-        electronics: "electronics",
-        jewelery: "jewelery"
-        // kitchen: no fetch, user will add products manually
-    };
-
-    // Map subcategories to Fake Store API (for demo, all use men's or women's clothing)
-    const subcategoryMap = {
-        children: "men's clothing",
-        men: "men's clothing",
-        women: "women's clothing",
-        girl: "women's clothing",
-        boy: "men's clothing"
-    };
-
-    // Helper: fetch from DummyJSON
-    function fetchDummyJSON(category) {
-        let url = 'https://dummyjson.com/products';
-        if (category === 'clothes') url = 'https://dummyjson.com/products/category/mens-shirts';
-        if (category === 'electronics') url = 'https://dummyjson.com/products/category/smartphones';
-        if (category === 'kitchen') url = 'https://dummyjson.com/products/category/home-decoration';
-        // Add more mappings as needed
-        return fetch(url).then(res => res.json()).then(data => data.products || []);
-    }
-
-    // Helper: fetch from Open Product Data (static demo)
-    function fetchOpenProductData() {
-        // Demo: Use a static open dataset (replace with real API if available)
-        // Example: https://product-open-data.com/api/products (if available)
-        // For now, return empty array
-        return Promise.resolve([]);
-    }
-
-    // Fetch and render products from all APIs
-    async function loadProducts(category, subcategory) {
-        let urls = [];
-        if (!category && !subcategory) {
-            urls.push('https://fakestoreapi.com/products?limit=8');
-        } else if (category === 'kitchen') {
-            // Do not fetch, user will add products manually
-            const productsDiv = document.getElementById('products');
-            productsDiv.innerHTML = '<p style="color:white;font-size:1.2rem;">Add your kitchen products here.</p>';
-            return;
-        } else if (category && !subcategory) {
-            const apiCategory = categoryMap[category] || "men's clothing";
-            urls.push(`https://fakestoreapi.com/products/category/${encodeURIComponent(apiCategory)}`);
-        } else if (subcategory) {
-            const apiSubcategory = subcategoryMap[subcategory] || "men's clothing";
-            urls.push(`https://fakestoreapi.com/products/category/${encodeURIComponent(apiSubcategory)}`);
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/5.6.0/framer-motion.umd.min.js"></script>
+    <script src="/animations/animations.js"></script>
+    <style>
+        .animated-header {
+            animation: fadeIn 1s ease-in-out;
         }
-
-        // Fetch from Fake Store API
-        const fakeStorePromise = Promise.all(urls.map(url => fetch(url).then(res => res.json())));
-        // Fetch from DummyJSON
-        const dummyPromise = fetchDummyJSON(category);
-        // Fetch from Open Product Data
-        const openDataPromise = fetchOpenProductData();
-
-        // Wait for all
-        const [fakeStoreResults, dummyResults, openDataResults] = await Promise.all([fakeStorePromise, dummyPromise, openDataPromise]);
-        // Flatten Fake Store results
-        const fakeStoreItems = [].concat(...fakeStoreResults);
-        // Merge all
-        const allItems = [...fakeStoreItems, ...dummyResults, ...openDataResults];
-
-        // Render
-        const productsDiv = document.getElementById('products');
-        productsDiv.innerHTML = '';
-        allItems.forEach((product, idx) => {
-            // Normalize fields
-            const image = product.image || product.thumbnail || '';
-            const title = product.title || product.name || 'Product';
-            const price = product.price || product.price_usd || 'N/A';
-            // Link to buy page with query params for product info
-            const buyLink = `/buypage?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&image=${encodeURIComponent(image)}`;
-            productsDiv.innerHTML += `
-                <div class="product" id="product-${idx}">
-                    <img src="${image}" alt="${title}">
-                    <h2>${title}</h2>
-                    <p>$${price}</p>
-                        <button class="add-cart-btn" onclick="addToCart('${title}', '${price}', '${image}')">Add to Cart</button>
-                        <a href="${buyLink}" class="buy-btn" style="display:inline-block;margin-top:10px;padding:10px 24px;background:linear-gradient(135deg,#43cea2 0%,#185a9d 100%);color:#fff;border-radius:10px;text-decoration:none;font-weight:bold;box-shadow:0 2px 8px rgba(24,90,157,0.18);transition:background 0.2s;">Buy</a>
-                </div>
-            `;
-        });
-        // Remove button handler
-        window.removeProduct = function(id) {
-            const el = document.getElementById(id);
-            if (el) el.remove();
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-    }
+    </style>
 
-    // Initial load: show common items
-    document.addEventListener('DOMContentLoaded', function() {
-        loadProducts();
-        // Category click handler
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Show subcategory bar only for clothes
-                if (btn.dataset.category === 'clothes') {
-                    document.getElementById('subcategory-nav').style.display = 'block';
-                } else {
-                    document.getElementById('subcategory-nav').style.display = 'none';
-                }
-                loadProducts(btn.dataset.category);
-            });
-        });
-        // Subcategory click handler
-        document.querySelectorAll('.subcategory-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                loadProducts('clothes', btn.dataset.subcategory);
-            });
-        });
+    <div id="profile-sidebar">
+  <header>
+    <h2>Profile Menu</h2>
+    <button id="close-sidebar">&times;</button>
+  </header>
+  <ul>
+    <li><a th:href="@{/cart}">Cart</a></li>
+    <li><a th:href="@{/Profile}">Profile</a></li>
+    <li><a th:href="@{/feedback}">Feedback</a></li>
+    <li><a th:href="@{/logout}">Log Out</a></li>
+  </ul>
+</div> 
+<script>
+  // Sidebar toggle functionality
+  document.addEventListener("DOMContentLoaded", () => {
+    const profilePic = document.getElementById("profile-pic");
+    const sidebar = document.getElementById("profile-sidebar");
+    const closeButton = document.getElementById("close-sidebar");
+
+    profilePic.addEventListener("click", () => {
+      sidebar.style.transform = "translateX(0)";
     });
-    </script>
-    <script src="chatbot.html"></script>
+
+    closeButton.addEventListener("click", () => {
+      sidebar.style.transform = "translateX(100%)";
+    });
+
+    // Ensure sidebar links are not blocked
+    const sidebarLinks = document.querySelectorAll("#profile-sidebar ul li a");
+    sidebarLinks.forEach(link => {
+      link.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+    });
+  });
+</script>
+
 </body>
 </html>

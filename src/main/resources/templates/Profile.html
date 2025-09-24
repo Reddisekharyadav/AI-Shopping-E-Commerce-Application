@@ -1,35 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>User Profile</title>
-		<img class="profile-pic" src="images/profile.jpeg" alt="Profile Picture">
+		<link rel="stylesheet" th:href="@{/css/styles.css}">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 		<style>
-				body {
-						font-family: 'Segoe UI', Arial, sans-serif;
-						background: linear-gradient(135deg, #1e1e2f 0%, #3a3a6c 100%);
-						min-height: 100vh;
-						color: #fff;
-						background-image:linear-gradient(
-					rgba(0, 0, 0, 0.5),
-					rgba(0, 0, 0, 0.5)
-				), url('images/profile.jpeg');
-						background-size: cover;
-						text-align: center;
-				}
-		</style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      nav {
+        display: flex;
+        justify-content: space-around;
+        background: #333;
+        padding: 1rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .profile-pic {
+        display: block;
+        margin: 2rem auto;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      h1, h2 {
+        text-align: center;
+        color: #fff;
+      }
+      p {
+        text-align: center;
+        font-size: 1.1rem;
+        color: #f0f0f0;
+      }
+      #profile-pic {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-left: 1rem;
+          cursor: pointer;
+          transition: transform 0.3s, box-shadow 0.3s;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #profile-pic:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+    </style>
 	</head>
 	<body>
+		<img class="profile-pic" th:src="@{/images/profile.jpeg}" th:alt="${user != null ? user.name : 'Guest'}" alt="Profile">
+		<!-- Updated navigation links for consistency -->
+		<nav>
+			<a th:href="@{/home}">Home</a>
+			<a th:href="@{/Aboutus}">About</a>
+			<a th:href="@{/Contact}">Contact Us</a>
+			<a th:href="@{/help}">Help</a>
+			<a th:href="@{/orders/all}">Orders</a>
+		</nav>
 		<h1>Welcome to Your Profile</h1>
-    <h1>User Profile</h1>
-    <h2>User Details</h2>
-    <p>Name: John Doe</p>
-    <p>Email: johndoe@example.com</p>
-    <p>Address: 123 Main St, Anytown USA</p>
-    <h2>Profile</h2>
-    <p>Profile picture here</p>
-    <p>Bio: I'm a frequent shopper who loves finding great deals online.</p>
-    <p>Favorite products: Product A, Product B, Product C</p>
+		<h2>User Details</h2>
+		<p>Name: <span th:text="${user != null ? user.name : 'Guest'}"></span></p>
+		<p>Email: <span th:text="${user != null ? user.email : 'Not Provided'}"></span></p>
+		<p>Address: <span th:text="${user != null ? user.address : 'Not Provided'}"></span></p>
+		<h2>Profile</h2>
+		<p>Bio: <span th:text="${user != null ? user.bio : 'No Bio Available'}"></span></p>
+		<p>Favorite products: <span th:text="${user != null ? user.favoriteProducts : 'None'}"></span></p>
+
+		<div class="header-right">
+		    <img id="profile-pic" th:src="@{/images/profile.jpeg}" alt="Profile">
+		</div>
+	</body>
 </html>
 <!-- Migrated from static -->

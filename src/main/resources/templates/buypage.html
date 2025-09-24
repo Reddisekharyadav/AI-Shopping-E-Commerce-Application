@@ -104,7 +104,7 @@
 <body>
         <header id="main-header">
             <div class="header-left">
-                <img id="logo" src="images/logo.png" alt="Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
+                <img id="logo" src="./images/logo.jpg" alt="Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
                 <span class="site-title">NextGenKart</span>
             </div>
             <nav class="header-nav" aria-label="Main Navigation">
@@ -114,8 +114,8 @@
                 <a class="nav-btn" th:href="@{/help}">Help</a>
             </nav>
             <div class="header-right">
-                <img id="profile-pic" src="images/profile.png" alt="Profile" onclick="toggleProfileMenu()" style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;">
-                <div id="profile-menu" class="profile-menu" style="display:none;position:absolute;top:60px;right:0;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15);min-width:160px;padding:12px 0;">
+                <img id="profile-pic" src="./images/profile.jpeg" alt="Profile" style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;">
+                <div id="profile-menu" th:if="${profileMenuVisible}" class="profile-menu" style="display:none;position:absolute;top:60px;right:0;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15);min-width:160px;padding:12px 0;">
                     <a href="/cart">Cart</a>
                     <a href="/orders">Orders</a>
                     <a th:href="@{/Profile}">Profile</a>
@@ -124,25 +124,16 @@
                 </div>
             </div>
         </header>
-        <script>
-            function toggleProfileMenu() {
-                var menu = document.getElementById('profile-menu');
-                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            }
-            document.addEventListener('click', function(e) {
-                var menu = document.getElementById('profile-menu');
-                var profilePic = document.getElementById('profile-pic');
-                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
-                    menu.style.display = 'none';
-                }
-            });
-        </script>
             
             
         <div class="buy-container">
         <h1>Buy Item</h1>
-        <div id="product-info"></div>
-        <form id="buy-form" th:action="@{/payment}" method="get">
+        <div id="product-info">
+            <img th:src="${product != null && product.image != null ? product.image : '/images/default-product.jpg'}" th:alt="${product != null && product.title != null ? product.title : 'Default product'}" alt="[[${product != null && product.title != null ? product.title : 'Default'}]]" class="product-img" />
+            <div class="product-title" th:text="${product != null && product.title != null ? product.title : 'Unnamed Product'}"></div>
+            <div class="product-price" th:text="${product != null && product.price != null ? 'Price: $' + product.price : 'Price not available'}"></div>
+        </div>
+        <form th:action="@{/payment}" method="get">
             <label for="color">Color:</label>
             <select id="color" name="color" required>
                 <option value="Red">Red</option>
@@ -164,25 +155,11 @@
                 <option value="paypal">PayPal</option>
                 <option value="bitcoin">Bitcoin</option>
             </select>
+            <input type="hidden" name="title" th:value="${title}" />
+            <input type="hidden" name="price" th:value="${price}" />
+            <input type="hidden" name="image" th:value="${image}" />
             <input type="submit" value="Buy">
         </form>
     </div>
-    <script>
-    function getQueryParam(name) {
-        const url = new URL(window.location.href);
-        return url.searchParams.get(name) || '';
-    }
-    const title = getQueryParam('title');
-    const price = getQueryParam('price');
-    const image = getQueryParam('image');
-    document.getElementById('product-info').innerHTML = `
-        <img src="${image}" alt="${title}" class="product-img" />
-        <div class="product-title">${title}</div>
-        <div class="product-price">Price: $${price}</div>
-    `;
-    document.getElementById('buy-form').addEventListener('submit', function(e) {
-        this.action = `/payment?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&image=${encodeURIComponent(image)}&color=${encodeURIComponent(document.getElementById('color').value)}&size=${encodeURIComponent(document.getElementById('size').value)}&payment_method=${encodeURIComponent(document.getElementById('payment_method').value)}`;
-    });
-    </script>
 </body>
 </html>

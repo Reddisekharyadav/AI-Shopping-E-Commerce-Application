@@ -23,4 +23,10 @@ public class CartService {
     public void deleteItem(Long id) {
         repository.deleteById(id);
     }
+
+    // Added method to retrieve a CartItem by its ID
+    public CartItem getItemById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("CartItem not found with id: " + id));
+    }
 }

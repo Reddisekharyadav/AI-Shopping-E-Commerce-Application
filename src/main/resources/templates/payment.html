@@ -4,104 +4,68 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Payment Page</title>
-        <style>
-                .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-                .payment-form { background-color: #f5f5f5; padding: 20px; border-radius: 5px; }
-                .payment-form input[type="text"], .payment-form input[type="email"], .payment-form input[type="number"], .payment-form select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
-                .payment-form button { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
-                .payment-form button:hover { background-color: #45a049; }
-                .payment-success { background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 20px; }
-                .payment-error { background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-top: 20px; }
-                /* Shared navbar styles */
-                #main-header {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    width: 100%;
-                    background: rgba(255,255,255,0.08);
-                    padding: 10px 32px;
-                    box-sizing: border-box;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                    border-bottom: 2px solid #db2727;
-                    position: relative;
-                    z-index: 10;
-                }
-                .header-left {
-                    display: flex;
-                    align-items: center;
-                }
-                .site-title {
-                    font-size: 2.2rem;
-                    font-weight: bold;
-                    color: #db2727;
-                    margin-left: 18px;
-                    letter-spacing: 2px;
-                    text-shadow: 2px 2px 8px #fff;
-                }
-                .header-nav {
-                    display: flex;
-                    gap: 18px;
-                }
-                .nav-btn {
-                    color: #fff;
-                    text-decoration: none;
-                    display: block;
-                    padding: 12px 28px;
-                    border-radius: 10px;
-                    font-weight: bold;
-                    font-size: 1.08rem;
-                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
-                    background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
-                    transition: background 0.3s, transform 0.2s;
-                }
-                .nav-btn:hover {
-                    background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
-                    transform: scale(1.08);
-                }
-                .header-right {
-                    position: relative;
-                    margin-left: 24px;
-                }
-                #profile-pic {
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    cursor: pointer;
-                    box-shadow: 0 2px 8px rgba(24,90,157,0.18);
-                    border: 2px solid #43cea2;
-                }
-                .profile-menu {
-                    display: none;
-                    position: absolute;
-                    top: 60px;
-                    right: 0;
-                    background: #fff;
-                    border-radius: 12px;
-                    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-                    min-width: 160px;
-                    padding: 12px 0;
-                }
-                .profile-menu a {
-                    display: block;
-                    padding: 12px 24px;
-                    color: #db2727;
-                    text-decoration: none;
-                    font-weight: 500;
-                    border-bottom: 1px solid #eee;
-                }
-                .profile-menu a:last-child {
-                    border-bottom: none;
-                }
-                .profile-menu a:hover {
-                    background: #f7f7f7;
-                }
-        </style>
+        <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background: linear-gradient(to right, #ff9966, #ff5e62);
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #333;
+        color: white;
+        padding: 1rem;
+      }
+      nav {
+        display: flex;
+        gap: 1rem;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      .container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .payment-form input[type="text"],
+      .payment-form input[type="password"],
+      .payment-form input[type="submit"] {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .payment-form input[type="submit"] {
+        background: #ff5e62;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .payment-form input[type="submit"]:hover {
+        background: #ff9966;
+      }
+    </style>
 </head>
 <body>
         <header id="main-header">
             <div class="header-left">
-                <img id="logo" src="images/logo.png" alt="Logo">
+                <img id="logo" src="./images/logo.png" alt="Logo">
                 <span class="site-title">NextGenKart</span>
             </div>
             <nav class="header-nav" aria-label="Main Navigation">
@@ -109,39 +73,27 @@
                 <a class="nav-btn" th:href="@{/Aboutus}">About</a>
                 <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
                 <a class="nav-btn" th:href="@{/help}">Help</a>
+                <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
             </nav>
             <div class="header-right">
-                <img id="profile-pic" src="images/profile.png" alt="Profile" onclick="toggleProfileMenu()">
-                <div id="profile-menu" class="profile-menu">
-                    <a href="/cart">Cart</a>
-                    <a href="/orders">Orders</a>
+                <img id="profile-pic" src="./images/profile.jpeg" alt="Profile">
+                <div id="profile-menu" th:if="${profileMenuVisible}" class="profile-menu">
+                    <a th:href="@{/cart}">Cart</a>
+                    <a th:href="@{/orders}">Orders</a>
                     <a th:href="@{/Profile}">Profile</a>
                     <a th:href="@{/feedback}">Feedback</a>
-                    <a th:href="@{/mrs}">Log Out</a>
+                    <a th:href="@{/logout}">Log Out</a>
                 </div>
             </div>
         </header>
-        <script>
-            function toggleProfileMenu() {
-                var menu = document.getElementById('profile-menu');
-                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            }
-            document.addEventListener('click', function(e) {
-                var menu = document.getElementById('profile-menu');
-                var profilePic = document.getElementById('profile-pic');
-                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
-                    menu.style.display = 'none';
-                }
-            });
-        </script>
         <h1>Payment Page</h1>
     <div class="container">
-        <form class="payment-form" th:action="@{/orders/create}" method="post" onsubmit="return showPaymentSuccess(event)">
-            <input type="hidden" name="productName" th:value="${param.title}" />
-            <input type="hidden" name="price" th:value="${param.price}" />
-            <input type="hidden" name="color" th:value="${param.color}" />
-            <input type="hidden" name="size" th:value="${param.size}" />
-            <input type="hidden" name="paymentMethod" th:value="${param.payment_method}" />
+        <form class="payment-form" th:action="@{/orders/create}" method="post" th:if="${paymentSuccess != null and !paymentSuccess}">
+            <input type="hidden" name="productName" th:value="${title}" />
+            <input type="hidden" name="price" th:value="${price}" />
+            <input type="hidden" name="color" th:value="${color}" />
+            <input type="hidden" name="size" th:value="${size}" />
+            <input type="hidden" name="paymentMethod" th:value="${payment_method}" />
             <input type="hidden" name="username" th:value="${username}" />
             <label for="card_number">Card Number:</label>
             <input type="text" id="card_number" name="card_number" required>
@@ -151,19 +103,11 @@
             <input type="text" id="cvv" name="cvv" required>
             <button type="submit">Pay Now</button>
         </form>
-        <div id="payment-success" class="payment-success" style="display:none;text-align:center;">
+        <div id="payment-success" class="payment-success" th:if="${paymentSuccess}">
             <h2>Payment Successful!</h2>
             <p>Your order has been placed and is being processed.</p>
-            <button onclick="window.location.href='/orders'" style="background:linear-gradient(135deg,#43cea2 0%,#185a9d 100%);color:#fff;padding:12px 32px;border:none;border-radius:8px;font-size:1.1rem;cursor:pointer;">Go to Orders</button>
+            <a th:href="@{/orders}" class="go-to-orders-btn">Go to Orders</a>
         </div>
-        <script>
-        function showPaymentSuccess(e) {
-            e.preventDefault();
-            document.querySelector('.payment-form').style.display = 'none';
-            document.getElementById('payment-success').style.display = 'block';
-            return false;
-        }
-        </script>
     </div>
 </body>
 </html>

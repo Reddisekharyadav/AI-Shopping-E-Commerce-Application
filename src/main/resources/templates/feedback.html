@@ -96,6 +96,21 @@
 		.feedback-form textarea {
 			height:80px;
 		}
+		#profile-pic {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-left: 1rem;
+			cursor: pointer;
+			transition: transform 0.3s, box-shadow 0.3s;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		#profile-pic:hover {
+			transform: scale(1.1);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		}
 	</style>
 </head>
 <body>
@@ -121,142 +136,8 @@
 			<button type="submit" class="animated-btn">Submit</button>
 		</form>
 	</section>
-</body>
-</html>
-				rating: 5
-			},
-			{
-				name: "Bob",
-				product: "Headphones",
-				feedback: "The sound quality is amazing!",
-				rating: 4
-			},
-			{
-				name: "Alice",
-				product: "Laptop",
-				feedback: "The laptop is very fast and the battery life is great.",
-				rating: 5
-			},
-			{
-				name: "Tom",
-				product: "Smartphone",
-				feedback: "The camera is excellent and the phone is very easy to use.",
-				rating: 4
-			},
-			{
-				name: "Sara",
-				product: "Watch",
-				feedback: "The watch looks great and the features are very useful.",
-				rating: 3
-			}
-		];
-
-		// Function to display feedback as a table
-		function displayFeedbackTable() {
-			let table = "<table><tr><th>Name</th><th>Product</th><th>Feedback</th><th>Rating</th></tr>";
-			for (let i = 0; i < feedbackData.length; i++) {
-				table += "<tr><td>" + feedbackData[i].name + "</td><td>" + feedbackData[i].product + "</td><td>" + feedbackData[i].feedback + "</td><td>" + feedbackData[i].rating + "</td></tr>";
-			}
-			table += "</table>";
-			document.querySelector(".feedback .chart").innerHTML = table;
-		}
-
-		// Function to display feedback as a pie chart
-		function displayFeedbackPieChart() {
-			let ratings = [0, 0, 0, 0, 0];
-			for (let i = 0; i < feedbackData.length; i++) {
-				ratings[feedbackData[i].rating - 1]++;
-			}
-			let chart = new ApexCharts(document.querySelector(".feedback .chart"), {
-				series: ratings,
-				chart: {
-					type: 'pie',
-				},
-				labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars']
-			});
-			chart.render();
-		}
-
-		// Function to display feedback as a bar graph
-		function displayFeedbackBarGraph() {
-			let ratings = [0, 0, 0, 0, 0];
-			for (let i = 0; i < feedbackData.length; i++) {
-				ratings[feedbackData[i].rating - 1]++;
-			}
-			let chart = new ApexCharts(document.querySelector(".feedback .chart"), {
-				series: [{
-					data: ratings
-				}],
-				chart: {
-					type: 'bar',
-					height: 350
-				},
-				plotOptions: {
-					bar: {
-						horizontal: false,
-						columnWidth: '55%',
-						endingShape: 'rounded'
-					},
-				},
-				dataLabels: {
-					enabled: false
-				},
-				xaxis: {
-					categories: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],
-				},
-				yaxis: {
-					title: {
-						text: 'Number of Ratings'
-					}
-				},
-				fill: {
-					type: 'gradient',
-					gradient: {
-						shade: 'light',
-						type: "vertical",
-						shadeIntensity: 0.25,
-						gradientToColors: undefined,
-						inverseColors: true,
-						opacityFrom: 0.85,
-						opacityTo: 0.85,
-						stops: [50, 0, 100]
-					},
-				}
-			});
-			chart.render();
-		}
-
-		// Event listener for form submission
-		document.querySelector(".form form").addEventListener("submit", function(event) {
-			event.preventDefault();
-			let name = event.target[0].value;
-			let product = event.target[1].value;
-			let feedback = event.target[2].value;
-			let rating = event.target[3].value;
-			feedbackData.push({
-				name: name,
-				product: product,
-				feedback: feedback,
-				rating: rating
-			});
-			event.target.reset();
-			displayFeedbackTable();
-		});
-
-		// Event listener for chart type selection
-		document.querySelectorAll(".feedback input[type='radio']").forEach(function(radio) {
-			radio.addEventListener("change", function() {
-				if (this.value === "table") {
-					displayFeedbackTable();
-				} else if (this.value === "piechart") {
-					displayFeedbackPieChart();
-				} else if (this.value === "bargraph") {
-					displayFeedbackBarGraph();
-				}
-			});
-		});
-
-		// Display feedback as a table by default
-
+	<div class="header-right">
+		<img id="profile-pic" th:src="@{/images/profile.jpeg}" alt="Profile">
+	</div>
 </body>
 </html>
