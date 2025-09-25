@@ -43,29 +43,29 @@ public class SignupController {
     public String signup(@RequestParam String username,
             @RequestParam String password) {
         logger.info("POST /signup endpoint hit with username: {}", username);
-        
+
         // Validate input
         if (username == null || username.trim().isEmpty()) {
             logger.error("Username is null or empty");
             return "redirect:/signup?error=registrationFailed";
         }
-        
+
         if (password == null || password.trim().isEmpty()) {
             logger.error("Password is null or empty");
             return "redirect:/signup?error=registrationFailed";
         }
-        
+
         try {
             // Check if user already exists first
             if (authService.userExists(username)) {
-                logger.warn("User {} already exists", username);
-                return "redirect:/signup?error=userExists";
+                logger.warn("User {} already exists, redirecting to login", username);
+                return "redirect:/Login?error=userExists&message=User already exists. Please login instead.";
             }
-            
+
             boolean registered = authService.registerNewUser(username, password);
             if (registered) {
                 logger.info("User registered successfully: {}", username);
-                return "redirect:/Login?success=registration";
+                return "redirect:/Login?success=registration&message=Registration successful! Please login.";
             } else {
                 logger.warn("Registration failed for username: {}", username);
                 return "redirect:/signup?error=registrationFailed";

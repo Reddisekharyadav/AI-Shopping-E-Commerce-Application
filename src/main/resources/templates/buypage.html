@@ -129,36 +129,69 @@
         <div class="buy-container">
         <h1>Buy Item</h1>
         <div id="product-info">
-            <img th:src="${product != null && product.image != null ? product.image : '/images/default-product.jpg'}" th:alt="${product != null && product.title != null ? product.title : 'Default product'}" alt="[[${product != null && product.title != null ? product.title : 'Default'}]]" class="product-img" />
-            <div class="product-title" th:text="${product != null && product.title != null ? product.title : 'Unnamed Product'}"></div>
-            <div class="product-price" th:text="${product != null && product.price != null ? 'Price: $' + product.price : 'Price not available'}"></div>
+            <img th:src="${image != null && !image.isEmpty() ? image : '/images/default-product.jpg'}" 
+                 th:alt="${title}" 
+                 title="${title}"
+                 class="product-img" 
+                 onerror="this.src='/images/default-product.jpg'" />
+            <div class="product-title" th:text="${title}"></div>
+            <div class="product-price" th:text="'Price: $' + ${price}"></div>
         </div>
-        <form th:action="@{/payment}" method="get">
+        
+        <!-- Form for adding to cart -->
+        <form th:action="@{/addToCart}" method="post" style="margin-bottom: 10px;">
+            <input type="hidden" name="title" th:value="${title}" />
+            <input type="hidden" name="price" th:value="${price}" />
+            <input type="hidden" name="image" th:value="${image}" />
+            
             <label for="color">Color:</label>
             <select id="color" name="color" required>
+                <option value="">Select Color</option>
                 <option value="Red">Red</option>
                 <option value="Blue">Blue</option>
                 <option value="Green">Green</option>
                 <option value="Black">Black</option>
                 <option value="White">White</option>
             </select>
+
             <label for="size">Size:</label>
             <select id="size" name="size" required>
+                <option value="">Select Size</option>
                 <option value="S">Small</option>
                 <option value="M">Medium</option>
                 <option value="L">Large</option>
-                <option value="XL">X-Large</option>
+                <option value="XL">Extra Large</option>
             </select>
-            <label for="payment_method">Payment Method:</label>
-            <select id="payment_method" name="payment_method">
-                <option value="credit_card">Credit Card</option>
-                <option value="paypal">PayPal</option>
-                <option value="bitcoin">Bitcoin</option>
-            </select>
+
+            <input type="submit" value="Add to Cart" />
+        </form>
+        
+        <!-- Form for direct purchase -->
+        <form th:action="@{/payment}" method="get">
             <input type="hidden" name="title" th:value="${title}" />
             <input type="hidden" name="price" th:value="${price}" />
             <input type="hidden" name="image" th:value="${image}" />
-            <input type="submit" value="Buy">
+            
+            <label for="color2">Color:</label>
+            <select id="color2" name="color" required>
+                <option value="">Select Color</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+            </select>
+
+            <label for="size2">Size:</label>
+            <select id="size2" name="size" required>
+                <option value="">Select Size</option>
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">Extra Large</option>
+            </select>
+
+            <input type="submit" value="Buy Now" style="background: linear-gradient(135deg,#e74c3c 0%,#c0392b 100%);" />
         </form>
     </div>
 </body>

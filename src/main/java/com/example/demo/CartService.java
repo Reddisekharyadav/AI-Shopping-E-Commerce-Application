@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.model.CartItem;
+import com.example.demo.repository.CartItemRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 

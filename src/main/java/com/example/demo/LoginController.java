@@ -16,23 +16,61 @@ public class LoginController {
      * GET /Login endpoint: renders the Login page
      */
     private static final String LOGIN_VIEW = "Login"; // Define a constant for the Login view name
+    private static final String USERNAME_SESSION_KEY = "username"; // Define a constant for session key
 
-    @GetMapping("/Login")
-    public String showLoginPage(Model model) {
-        logger.info("showLoginPage method invoked"); // Debugging log
+    @GetMapping({ "/Login", "/login" })
+    public String showLoginPage(@RequestParam(name = "success", required = false) String success,
+            @RequestParam(name = "error", required = false) String error,
+            @RequestParam(name = "message", required = false) String message,
+            @RequestParam(name = "logout", required = false) String logout,
+            Model model) {
+        logger.info("showLoginPage method invoked with logout param: {}", logout); // Debugging log
+
+        if ("registration".equals(success)) {
+            model.addAttribute("successMessage", message != null ? message : "Registration successful! Please login.");
+        }
+
+        if ("userExists".equals(error)) {
+            model.addAttribute("errorMessage", message != null ? message : "User already exists. Please login.");
+        } else if ("userNotFound".equals(error)) {
+            model.addAttribute("errorMessage", message != null ? message : "User does not exist. Please signup first.");
+        } else if ("invalidCredentials".equals(error)) {
+            model.addAttribute("errorMessage",
+                    message != null ? message : "Invalid username or password. Please try again.");
+        }
+
+        if (logout != null) {
+            model.addAttribute("successMessage", "You have been logged out successfully.");
+        }
+
         model.addAttribute("loginForm", new LoginForm()); // Add form-backing object
         return LOGIN_VIEW; // Render the Login view
     }
 
     /**
-     * Logout endpoint: clears session and redirects to home page
+     * Logout endpoint: clears session and redirects to login page with logout
+     * confirmation
      */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        logger.info("User logging out and invalidating session");
-        session.invalidate();
-        // Forward to Thymeleaf template for logout page
-        return "mrs";
+        String username = (String) session.getAttribute(USERNAME_SESSION_KEY);
+        logger.info("User {} logging out and invalidating session", username != null ? username : "unknown");
+
+        try {
+            // Clear all session attributes first
+            session.removeAttribute(USERNAME_SESSION_KEY);
+            session.removeAttribute("cart");
+            session.removeAttribute("user");
+
+            // Invalidate the entire session
+            session.invalidate();
+            logger.info("Session invalidated successfully, redirecting to login with logout confirmation");
+        } catch (Exception e) {
+            logger.error("Error during session invalidation", e);
+        }
+
+        // Redirect to login page with logout parameter
+        return "redirect:/Login?logout";
     }
 
     private final AuthService authService;
@@ -66,17 +104,17 @@ public class LoginController {
 
         if (!authService.userExists(username)) {
             logger.warn("User does not exist: {}", username);
-            return "Signup";
+            return "redirect:/Login?error=userNotFound&message=User does not exist. Please signup first.";
         }
 
         if (authService.authenticate(username, password)) {
             logger.info("User authenticated successfully: {}", username);
             // Store username in session for later use
-            session.setAttribute("username", username);
+            session.setAttribute(USERNAME_SESSION_KEY, username);
             return "redirect:/home";
         } else {
             logger.warn("Authentication failed for username: {}", username);
-            return LOGIN_VIEW;
+            return "redirect:/Login?error=invalidCredentials&message=Invalid username or password. Please try again.";
         }
     }
 }

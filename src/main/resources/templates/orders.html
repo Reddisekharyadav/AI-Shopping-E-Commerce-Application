@@ -185,15 +185,21 @@
                 <th>Order ID</th>
                 <th>Product Name</th>
                 <th>Price</th>
+                <th>Color</th>
+                <th>Size</th>
                 <th>Status</th>
+                <th>Order Date</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="order : ${orders}">
                 <td th:text="${order.id}"></td>
-                <td th:text="${order.productName}"></td>
-                <td th:text="${order.price}"></td>
+                <td th:text="${order.productTitle}"></td>
+                <td th:text="'$' + ${order.productPrice}"></td>
+                <td th:text="${order.color}"></td>
+                <td th:text="${order.size}"></td>
                 <td th:text="${order.status}"></td>
+                <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
         </tbody>
     </table>

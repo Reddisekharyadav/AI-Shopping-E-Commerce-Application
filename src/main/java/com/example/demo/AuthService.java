@@ -71,9 +71,26 @@ public class AuthService {
         try {
             logger.info("Attempting to authenticate user: {}", username);
             User user = userRepository.findByUsername(username).orElse(null);
-            if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-                logger.info("Authentication successful for user: {}", username);
-                return true;
+            if (user != null) {
+                String storedPassword = user.getPassword();
+
+                // Check if password is BCrypt hashed (starts with $2a$ or $2b$)
+                boolean isBCryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$");
+
+                if (isBCryptHash) {
+                    // Use BCrypt matching for hashed passwords
+                    if (passwordEncoder.matches(password, storedPassword)) {
+                        logger.info("Authentication successful for user: {} (BCrypt)", username);
+                        return true;
+                    }
+                } else {
+                    // Plain text comparison for legacy passwords
+                    if (password.equals(storedPassword)) {
+                        logger.info("Authentication successful for user: {} (Plain text - consider updating to BCrypt)",
+                                username);
+                        return true;
+                    }
+                }
             }
             logger.warn("Authentication failed for user: {}", username);
             return false;

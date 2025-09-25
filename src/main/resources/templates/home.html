@@ -150,8 +150,8 @@
                 }
                 /* Consolidated styles for #profile-pic */
         #profile-pic {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -159,6 +159,20 @@
             box-shadow: 0 2px 8px rgba(24,90,157,0.18);
             border: 2px solid #43cea2;
             background: none;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(24,90,157,0.25);
+        }
+        
+        #profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
                 .profile-menu {
                     display: none;
@@ -170,6 +184,7 @@
                     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
                     min-width: 160px;
                     padding: 12px 0;
+                    z-index: 1000;
                 }
                 .profile-menu a {
                     display: block;
@@ -459,17 +474,23 @@
                 <a class="nav-btn" th:href="@{/orders/all}">Orders</a> <!-- New Orders link -->
             </nav>
             <div class="header-right">
-                <button id="profile-pic" onKeyPress="toggleProfileMenu()" title="Open profile menu" aria-label="Open profile menu">
-                    <span class="sr-only">Open profile menu</span>
+                <button id="profile-pic" onclick="toggleProfileMenu()" onKeyPress="toggleProfileMenu()" title="Open profile menu" aria-label="Open profile menu">
+                    <img src="images/profile.jpeg" alt="Profile">
                 </button>
-                
+                <div id="profile-menu" class="profile-menu">
+                    <a th:href="@{/cart}">Cart</a>
+                    <a th:href="@{/orders}">Orders</a>
+                    <a th:href="@{/Profile}">Profile</a>
+                    <a th:href="@{/feedback}">Feedback</a>
+                    <a th:href="@{/logout}">Log Out</a>
+                </div>
             </div>
         </header>
 
         </div>
-        <form id="header-form">
+        <form id="header-form" onsubmit="return false;">
             <input type="text" placeholder="Search...">
-            <button type="submit">Search</button>
+            <button type="button" onclick="alert('Search functionality coming soon!')">Search</button>
         </form>
     </div>
 
@@ -505,9 +526,12 @@
             </h2>
             <p th:text="'Price: $' + ${product.price}"></p>
             <a th:href="@{/buypage(title=${product.title != null ? product.title : 'Unnamed Product'}, price=${product.price}, image=${product.image})}" class="buy-btn">Buy</a>
-            <form th:action="@{/cart/add}" method="post">
-                <input type="hidden" name="productName" th:value="${product.title != null ? product.title : 'Unnamed Product'}" />
+            <form th:action="@{/addToCart}" method="post">
+                <input type="hidden" name="title" th:value="${product.title != null ? product.title : 'Unnamed Product'}" />
                 <input type="hidden" name="price" th:value="${product.price}" />
+                <input type="hidden" name="image" th:value="${product.image}" />
+                <input type="hidden" name="color" value="Default" />
+                <input type="hidden" name="size" value="Default" />
                 <button type="submit" class="add-cart-btn">Add to Cart</button>
             </form>
         </div>
@@ -541,31 +565,74 @@
         }
     </style>
 
-    <div id="profile-sidebar">
-  <header>
-    <h2>Profile Menu</h2>
-    <button id="close-sidebar">&times;</button>
-  </header>
-  <ul>
-    <li><a th:href="@{/cart}">Cart</a></li>
-    <li><a th:href="@{/Profile}">Profile</a></li>
-    <li><a th:href="@{/feedback}">Feedback</a></li>
-    <li><a th:href="@{/logout}">Log Out</a></li>
-  </ul>
-</div> 
 <script>
+  // Global function for profile menu toggle - accessible from onclick
+  function toggleProfileMenu() {
+      var menu = document.getElementById('profile-menu');
+      if (menu) {
+          var isVisible = menu.style.display === 'block';
+          menu.style.display = isVisible ? 'none' : 'block';
+          console.log('Profile menu toggled:', !isVisible);
+      }
+  }
+
+  // Session heartbeat to keep session alive while user is active
+  function sendSessionHeartbeat() {
+      fetch('/session/heartbeat')
+          .then(response => {
+              if (response.status === 401) {
+                  // Session expired, redirect to login
+                  console.log('Session expired, redirecting to login');
+                  window.location.href = '/Login';
+              }
+          })
+          .catch(error => {
+              console.log('Heartbeat error:', error);
+          });
+  }
+
   // Sidebar toggle functionality
   document.addEventListener("DOMContentLoaded", () => {
     const profilePic = document.getElementById("profile-pic");
     const sidebar = document.getElementById("profile-sidebar");
     const closeButton = document.getElementById("close-sidebar");
 
-    profilePic.addEventListener("click", () => {
-      sidebar.style.transform = "translateX(0)";
+    // Start session heartbeat every 30 minutes to keep session alive
+    setInterval(sendSessionHeartbeat, 30 * 60 * 1000); // 30 minutes
+
+    if (profilePic && sidebar) {
+      profilePic.addEventListener("click", () => {
+        sidebar.style.transform = "translateX(0)";
+      });
+    }
+
+    if (closeButton) {
+      closeButton.addEventListener("click", () => {
+        sidebar.style.transform = "translateX(100%)";
+      });
+    }
+    
+    // Close profile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        var menu = document.getElementById('profile-menu');
+        var profilePic = document.getElementById('profile-pic');
+        
+        // Don't close if clicking on profile menu items or profile pic
+        if (menu && profilePic && !profilePic.contains(e.target) && !menu.contains(e.target)) {
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+                console.log('Profile menu closed by outside click');
+            }
+        }
     });
 
-    closeButton.addEventListener("click", () => {
-      sidebar.style.transform = "translateX(100%)";
+    // Ensure profile menu links work properly
+    const profileMenuLinks = document.querySelectorAll("#profile-menu a");
+    profileMenuLinks.forEach(link => {
+      link.addEventListener("click", (event) => {
+        console.log('Profile menu link clicked:', event.target.textContent);
+        // Allow the link to navigate normally
+      });
     });
 
     // Ensure sidebar links are not blocked
