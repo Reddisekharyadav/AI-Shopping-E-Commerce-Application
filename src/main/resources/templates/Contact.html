@@ -79,10 +79,10 @@
       #logo {
         width: 50px;
         height: 50px;
-        border-radius: 50%;
+        border-radius: 10px;
         object-fit: cover;
         margin-right: 1rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       }
 
       #profile-pic {
@@ -100,12 +100,257 @@
         transform: scale(1.1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
+
+      /* Chatbot Widget Styles */
+      .chatbot-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .chatbot-button {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(67, 206, 162, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        animation: bounce 2s infinite;
+      }
+
+      .chatbot-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(67, 206, 162, 0.4);
+        background: linear-gradient(135deg, #db2727 0%, #ff6a00 100%);
+      }
+
+      .chatbot-button i {
+        color: white;
+        font-size: 24px;
+      }
+
+      .chatbot-tooltip {
+        position: absolute;
+        right: 70px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #333;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .chatbot-tooltip::after {
+        content: '';
+        position: absolute;
+        right: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid #333;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+      }
+
+      .chatbot-button:hover .chatbot-tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .chatbot-widget {
+          bottom: 15px;
+          right: 15px;
+        }
+        .chatbot-button {
+          width: 50px;
+          height: 50px;
+        }
+        .chatbot-button i {
+          font-size: 20px;
+        }
+        .chatbot-tooltip {
+          right: 60px;
+          font-size: 12px;
+        }
+        .chatbot-popup {
+          width: 85% !important;
+          height: 70% !important;
+          right: 5% !important;
+          bottom: 80px !important;
+        }
+      }
+
+      /* Chatbot Popup Styles */
+      .chatbot-popup {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 350px;
+        height: 450px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        display: none;
+        z-index: 1001;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+      }
+
+      .chatbot-header {
+        background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .chatbot-header h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .chatbot-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+      }
+
+      .chatbot-close:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .chatbot-content {
+        height: calc(100% - 60px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chatbot-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: #f8f9fa;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .chatbot-messages div {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        max-width: 85%;
+        word-wrap: break-word;
+      }
+
+      .chatbot-messages div b {
+        font-weight: 600;
+      }
+
+      .user-message {
+        background: #e3f2fd;
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .bot-message {
+        background: #f0f0f0;
+        margin-right: auto;
+      }
+
+      .error-message {
+        background: #ffebee;
+        color: #c62828;
+        margin-right: auto;
+      }
+
+      .chatbot-input-area {
+        padding: 15px 20px;
+        background: white;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        gap: 10px;
+      }
+
+      .chatbot-input {
+        flex: 1;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      .chatbot-input:focus {
+        border-color: #43cea2;
+      }
+
+      .chatbot-send {
+        background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .chatbot-send:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(67, 206, 162, 0.3);
+      }
+
+      .chatbot-send i {
+        font-size: 14px;
+      }
     </style>
   </head>
   <body>
       <header id="main-header">
         <div class="header-left">
-          <img id="logo" src="/images/logo.jpg" alt="Logo">
+            <img th:src="@{/images/logo.jpg}" th:alt="'Logo of ' + ${companyName}" alt="Logo" id="logo"/>
           <span class="site-title">NextGenKart</span>
         </div>
         <!-- Updated navigation links for consistency -->
@@ -114,18 +359,17 @@
           <a class="nav-btn" th:href="@{/Aboutus}">About</a>
           <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
           <a class="nav-btn" th:href="@{/help}">Help</a>
-          <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
+          <!-- <a class="nav-btn" th:href="@{/orders/all}">Orders</a> -->
         </nav>
         <div class="header-right">
             <div id="profile-menu" th:if="${#authentication != null && #authentication.principal != null}" class="profile-menu">
               <a th:href="@{/cart}">Cart</a>
-              <a th:href="@{/orders}">Orders</a>
+              <!-- <a th:href="@{/orders}">Orders</a> -->
               <a th:href="@{/Profile}">Profile</a>
               <a th:href="@{/feedback}">Feedback</a>
               <a th:href="@{/logout}">Log Out</a>
             </div>
             <div id="profile-menu" th:if="${#authentication == null || #authentication.principal == null}" class="profile-menu">
-              <p>Please log in to access your profile menu.</p>
             </div>
             <img id="profile-pic" th:src="@{/images/profile.jpeg}" alt="Profile">
           </div>
@@ -133,7 +377,6 @@
       <section class="glass-section">
         <h1>Contact Us</h1>
         <div th:if="${#authentication == null || #authentication.principal == null}" class="error-message">
-          <p>You need to log in to access the Contact page.</p>
         </div>
         <h2>Our Team</h2>
         <table class="contact-table">
@@ -143,8 +386,8 @@
           <tbody>
             <tr><td>M.Reddi Sekhar</td><td>Admin</td></tr>
             <tr><td>MUNI</td><td>Multi-Agent 1</td></tr>
-            <tr><td>Anjali</td><td>Multi-Agent 2</td></tr>
-            <tr><td>Vishnu Mohan</td><td>Shipping Management</td></tr>
+            <tr><td>NIranjan</td><td>Multi-Agent 2</td></tr>
+            <tr><td>Subash</td><td>Shipping Management</td></tr>
           </tbody>
         </table>
         <h2>Contact Details</h2>
@@ -172,6 +415,101 @@
               section.style.transform = "translateY(0)";
             }, 100);
           });
+        });
+      </script>
+
+      <!-- Chatbot Widget -->
+      <div class="chatbot-widget">
+        <button class="chatbot-button" onclick="toggleChatbot()" title="Need Help? Chat with us!">
+          <i class="fas fa-comments"></i>
+          <span class="chatbot-tooltip">Need Help? Chat with us!</span>
+        </button>
+      </div>
+
+      <!-- Chatbot Popup -->
+      <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+          <h3>AI Shopping Assistant</h3>
+          <button class="chatbot-close" onclick="toggleChatbot()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="chatbot-content">
+          <div class="chatbot-messages" id="chatbotMessages">
+            <div class="bot-message">
+              <b>AI Assistant:</b> Hello! I'm here to help you with your shopping questions. How can I assist you today?
+            </div>
+          </div>
+          <div class="chatbot-input-area">
+            <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your message here..." onkeypress="handleChatKeyPress(event)">
+            <button class="chatbot-send" onclick="sendChatMessage()">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function toggleChatbot() {
+          const popup = document.getElementById('chatbotPopup');
+          if (popup.style.display === 'block') {
+            popup.style.display = 'none';
+          } else {
+            popup.style.display = 'block';
+            document.getElementById('chatbotInput').focus();
+          }
+        }
+
+        function handleChatKeyPress(event) {
+          if (event.key === 'Enter') {
+            sendChatMessage();
+          }
+        }
+
+        async function sendChatMessage() {
+          const input = document.getElementById('chatbotInput');
+          const userMessage = input.value.trim();
+          if (!userMessage) return;
+
+          const messagesDiv = document.getElementById('chatbotMessages');
+          
+          // Add user message
+          messagesDiv.innerHTML += `<div class="user-message"><b>You:</b> ${userMessage}</div>`;
+          
+          // Clear input
+          input.value = '';
+          
+          // Scroll to bottom
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+          try {
+            // Send to chatbot backend
+            const response = await fetch('http://localhost:5000/ask', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: userMessage })
+            });
+            
+            const data = await response.json();
+            messagesDiv.innerHTML += `<div class="bot-message"><b>AI Assistant:</b> ${data.response}</div>`;
+          } catch (error) {
+            messagesDiv.innerHTML += `<div class="error-message"><b>Error:</b> Unable to connect to chatbot service. Please try again later.</div>`;
+          }
+          
+          // Scroll to bottom again
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Close chatbot when clicking outside
+        document.addEventListener('click', function(event) {
+          const popup = document.getElementById('chatbotPopup');
+          const widget = document.querySelector('.chatbot-widget');
+          
+          if (popup.style.display === 'block' && 
+              !popup.contains(event.target) && 
+              !widget.contains(event.target)) {
+            popup.style.display = 'none';
+          }
         });
       </script>
     </body>

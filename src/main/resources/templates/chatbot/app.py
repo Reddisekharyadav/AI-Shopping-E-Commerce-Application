@@ -83,4 +83,11 @@ def ask():
     return jsonify({"response": response})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Get port from environment variable or use default
+    port = int(os.getenv('FLASK_PORT', 5000))
+    
+    print(f"Starting Flask Chatbot Backend on port {port}...")
+    print(f"Chatbot API will be available at: http://localhost:{port}")
+    print("Press CTRL+C to stop the server")
+    
+    app.run(host='0.0.0.0', port=port, debug=False)

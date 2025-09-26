@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Order Confirmation</title>
+        <title>Order Confirmation - NextGenKart</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
         <style>
-                body { font-family: Arial, sans-serif; background: #f5f5f5; }
-                .container { max-width: 500px; margin: 80px auto; background: #fff; padding: 32px; border-radius: 16px; box-shadow: 0 2px 12px #ccc; text-align: center; }
-                h1 { color: #43cea2; margin-bottom: 18px; }
-                p { font-size: 1.2rem; color: #333; margin-bottom: 24px; }
-                .btn { background: linear-gradient(135deg,#43cea2 0%,#185a9d 100%); color: #fff; padding: 12px 32px; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; text-decoration: none; }
-                .btn:hover { background: linear-gradient(135deg,#185a9d 0%,#43cea2 100%); }
-                /* Shared navbar styles */
+                body {
+                    background-image: linear-gradient(
+                        rgba(0, 0, 0, 0.5),
+                        rgba(0, 0, 0, 0.75)
+                    ),
+                    url('images/AI\ featuyte.jpg');
+                    background-size: cover;
+                    font-family: 'Lato', sans-serif;
+                    color: #333;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                /* Modern header styles matching home page */
                 #main-header {
                     display: flex;
                     align-items: center;
@@ -25,10 +33,12 @@
                     position: relative;
                     z-index: 10;
                 }
+                
                 .header-left {
                     display: flex;
                     align-items: center;
                 }
+                
                 .site-title {
                     font-size: 2.2rem;
                     font-weight: bold;
@@ -37,10 +47,12 @@
                     letter-spacing: 2px;
                     text-shadow: 2px 2px 8px #fff;
                 }
+                
                 .header-nav {
                     display: flex;
                     gap: 18px;
                 }
+                
                 .nav-btn {
                     color: #fff;
                     text-decoration: none;
@@ -53,23 +65,43 @@
                     background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
                     transition: background 0.3s, transform 0.2s;
                 }
+                
                 .nav-btn:hover {
                     background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
                     transform: scale(1.08);
                 }
+                
                 .header-right {
                     position: relative;
                     margin-left: 24px;
                 }
+                
                 #profile-pic {
                     width: 48px;
                     height: 48px;
                     border-radius: 50%;
-                    object-fit: cover;
                     cursor: pointer;
+                    transition: transform 0.3s, box-shadow 0.3s;
+                    object-fit: cover;
                     box-shadow: 0 2px 8px rgba(24,90,157,0.18);
                     border: 2px solid #43cea2;
+                    background: none;
+                    padding: 0;
+                    overflow: hidden;
                 }
+                
+                #profile-pic:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0 4px 12px rgba(24,90,157,0.25);
+                }
+                
+                #profile-pic img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+                
                 .profile-menu {
                     display: none;
                     position: absolute;
@@ -80,7 +112,9 @@
                     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
                     min-width: 160px;
                     padding: 12px 0;
+                    z-index: 1000;
                 }
+                
                 .profile-menu a {
                     display: block;
                     padding: 12px 24px;
@@ -89,11 +123,155 @@
                     font-weight: 500;
                     border-bottom: 1px solid #eee;
                 }
+                
                 .profile-menu a:last-child {
                     border-bottom: none;
                 }
+                
                 .profile-menu a:hover {
                     background: #f7f7f7;
+                }
+                
+                #logo {
+                    width: 100px;
+                    height: auto;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+
+                /* Container styles */
+                .container {
+                    max-width: 700px;
+                    margin: 2rem auto;
+                    padding: 2rem;
+                    background: rgba(255,255,255,0.95);
+                    border-radius: 18px;
+                    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25),
+                                0 8px 32px 0 rgba(0, 0, 0, 0.18);
+                    text-align: center;
+                    transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+                }
+                
+                .container:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 12px 32px 0 rgba(238,9,121,0.25), 0 2px 24px 0 rgba(24,90,157,0.18);
+                }
+                
+                h1 {
+                    color: #db2727;
+                    margin-bottom: 1.5rem;
+                    text-shadow: 2px 2px 4px #ece2e2;
+                    font-size: 2.5rem;
+                }
+                
+                p {
+                    font-size: 1.2rem;
+                    color: #333;
+                    margin-bottom: 1.5rem;
+                }
+                
+                .btn {
+                    background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
+                    color: #fff;
+                    padding: 1rem 2rem;
+                    border: none;
+                    border-radius: 12px;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                    text-decoration: none;
+                    display: inline-block;
+                    transition: background 0.3s, transform 0.2s;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+                    margin: 0.5rem;
+                }
+                
+                .btn:hover {
+                    background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
+                    transform: scale(1.05);
+                    text-decoration: none;
+                    color: #fff;
+                }
+
+                /* Order details styles */
+                .order-details {
+                    background: rgba(248,249,250,0.8);
+                    border-radius: 12px;
+                    padding: 1.5rem;
+                    margin: 1.5rem 0;
+                    text-align: left;
+                    border: 2px solid #db2727;
+                }
+                
+                .order-details h3 {
+                    color: #db2727;
+                    margin-bottom: 1rem;
+                    text-align: center;
+                }
+                
+                .order-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    margin-bottom: 1rem;
+                }
+                
+                .order-item img {
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 2px solid #43cea2;
+                }
+                
+                .item-details {
+                    flex: 1;
+                }
+                
+                .item-details p {
+                    margin: 0.25rem 0;
+                    font-size: 1rem;
+                }
+
+                /* Responsive styles */
+                @media (max-width: 900px) {
+                    #main-header {
+                        flex-direction: column;
+                        align-items: stretch;
+                        padding: 10px 8px;
+                    }
+                    .header-left {
+                        justify-content: center;
+                        margin-bottom: 8px;
+                    }
+                    .header-nav {
+                        justify-content: center;
+                        gap: 8px;
+                        margin-bottom: 8px;
+                    }
+                    .header-right {
+                        justify-content: center;
+                        margin-left: 0;
+                        margin-bottom: 8px;
+                    }
+                }
+                
+                @media (max-width: 600px) {
+                    .container {
+                        margin: 1rem;
+                        padding: 1.5rem;
+                    }
+                    .site-title {
+                        font-size: 1.5rem;
+                    }
+                    .nav-btn {
+                        padding: 8px 12px;
+                        font-size: 0.95rem;
+                    }
+                    .order-item {
+                        flex-direction: column;
+                        text-align: center;
+                    }
                 }
         </style>
 </head>
@@ -110,48 +288,15 @@
                     <a class="nav-btn" th:href="@{/help}">Help</a>
             </nav>
             <div class="header-right">
-                <img id="profile-pic" src="./images/profile.jpeg" alt="Profile" onclick="toggleProfileMenu()">
+                <button id="profile-pic" onclick="toggleProfileMenu()" type="button">
+                    <img src="./images/profile.jpeg" alt="Profile">
+                </button>
                 <div id="profile-menu" class="profile-menu">
-                    <a href="/cart">Cart</a>
-                    <a href="/orders">Orders</a>
-                        <a th:href="@{/Profile}">Profile</a>
-                        <a th:href="@{/feedback}">Feedback</a>
-                        <a th:href="@{/mrs}">Log Out</a>
-                </div>
-            </div>
-        </header>
-        <script>
-            function toggleProfileMenu() {
-                var menu = document.getElementById('profile-menu');
-                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            }
-            document.addEventListener('click', function(e) {
-                var menu = document.getElementById('profile-menu');
-                var profilePic = document.getElementById('profile-pic');
-                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
-                    menu.style.display = 'none';
-                }
-            });
-        </script>
-        <header id="main-header">
-            <div class="header-left">
-                <img id="logo" src="./images/logo.png" alt="Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
-                <span class="site-title">NextGenKart</span>
-            </div>
-            <nav class="header-nav" aria-label="Main Navigation">
-                <a class="nav-btn" href="/">Home</a>
-                <a class="nav-btn" th:href="@{/Aboutus}">About</a>
-                <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
-                <a class="nav-btn" th:href="@{/help}">Help</a>
-            </nav>
-            <div class="header-right">
-                <img id="profile-pic" src="./images/profile.png" alt="Profile" onclick="toggleProfileMenu()" style="width:36px;height:36px;border-radius:50%;object-fit:cover;cursor:pointer;">
-                <div id="profile-menu" class="profile-menu" style="display:none;position:absolute;top:60px;right:0;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.15);min-width:160px;padding:12px 0;">
-                    <a href="/cart">Cart</a>
-                    <a href="/orders">Orders</a>
+                    <a th:href="@{/cart}">Cart</a>
+                    <a th:href="@{/orders}">Orders</a>
                     <a th:href="@{/Profile}">Profile</a>
                     <a th:href="@{/feedback}">Feedback</a>
-                    <a th:href="@{/mrs}">Log Out</a>
+                    <a th:href="@{/logout}">Log Out</a>
                 </div>
             </div>
         </header>
@@ -168,15 +313,64 @@
                 }
             });
         </script>
+
         <div class="container">
-        <h1>Order Confirmed!</h1>
-        <p>Your payment was successful and your order has been placed.<br>
-        You will be redirected to your Orders page shortly.</p>
-            <script>
-                setTimeout(function() {
-                    window.location.href = '/orders';
-                }, 3000);
-            </script>
-    </div>
-</body>
+            <h1>Order Confirmation</h1>
+            <p>Your payment was successful and your order has been placed.</p>
+            <p>You will be redirected to your Orders page shortly.</p>
+            
+            <div class="order-details" th:if="${order != null}">
+                <h3>Order Details</h3>
+                <div class="order-item">
+                    <img th:src="@{/images/__${order.image}__}" alt="Product" th:if="${order.image}">
+                    <div class="item-details">
+                        <p><strong>Product:</strong> <span th:text="${order.title}"></span></p>
+                        <p><strong>Price:</strong> $<span th:text="${order.price}"></span></p>
+                        <p><strong>Color:</strong> <span th:text="${order.color}"></span></p>
+                        <p><strong>Size:</strong> <span th:text="${order.size}"></span></p>
+                        <p><strong>Order ID:</strong> <span th:text="${order.id}"></span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <a class="btn" th:href="@{/orders}">View All Orders</a>
+            <a class="btn" th:href="@{/}">Continue Shopping</a>
+        </div>
+
+        <script>
+            // Profile menu functionality
+            function toggleProfileMenu() {
+                var menu = document.getElementById('profile-menu');
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Close profile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                var profilePic = document.getElementById('profile-pic');
+                var profileMenu = document.getElementById('profile-menu');
+                
+                if (!profilePic.contains(event.target)) {
+                    profileMenu.style.display = 'none';
+                }
+            });
+            
+            // Session heartbeat functionality
+            function sendHeartbeat() {
+                fetch('/session/heartbeat', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                }).catch(function(error) {
+                    console.log('Heartbeat failed:', error);
+                });
+            }
+
+            // Send heartbeat every 5 minutes
+            setInterval(sendHeartbeat, 300000);
+
+            // Redirect to orders page after 5 seconds
+            setTimeout(function() {
+                window.location.href = '/orders';
+            }, 5000);
+        </script>
+    </body>
 </html>

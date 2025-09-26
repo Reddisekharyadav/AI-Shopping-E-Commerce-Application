@@ -1,95 +1,611 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Payment Page</title>
-        <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+        <title>Payment - NextGenKart</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-      body {
-        font-family: 'Open Sans', sans-serif;
-        background: linear-gradient(to right, #ff9966, #ff5e62);
-        color: #333;
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #333;
-        color: white;
-        padding: 1rem;
-      }
-      nav {
-        display: flex;
-        gap: 1rem;
-      }
-      nav a {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-      }
-      nav a:hover {
-        text-decoration: underline;
-      }
-      .container {
-        max-width: 600px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .payment-form input[type="text"],
-      .payment-form input[type="password"],
-      .payment-form input[type="submit"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-      .payment-form input[type="submit"] {
-        background: #ff5e62;
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
-      .payment-form input[type="submit"]:hover {
-        background: #ff9966;
-      }
+        body {
+            background-image: linear-gradient(
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.75)
+            ),
+            url('images/AI\ featuyte.jpg');
+            background-size: cover;
+            font-family: 'Lato', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Modern header styles matching home page */
+        #main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            padding: 10px 32px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-bottom: 2px solid #db2727;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .site-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #db2727;
+            margin-left: 18px;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px #fff;
+        }
+        
+        .header-nav {
+            display: flex;
+            gap: 18px;
+        }
+        
+        .nav-btn {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.08rem;
+            box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+            background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
+            transition: background 0.3s, transform 0.2s;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
+            transform: scale(1.08);
+        }
+        
+        .header-right {
+            position: relative;
+            margin-left: 24px;
+        }
+        
+        #profile-pic {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(24,90,157,0.18);
+            border: 2px solid #43cea2;
+            background: none;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(24,90,157,0.25);
+        }
+        
+        #profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .profile-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            min-width: 160px;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+        
+        .profile-menu a {
+            display: block;
+            padding: 12px 24px;
+            color: #db2727;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-menu a:hover {
+            background: #f7f7f7;
+        }
+        
+        #logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Payment form container */
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: 18px;
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.25),
+                        0 8px 32px 0 rgba(0, 0, 0, 0.18);
+            transition: transform 0.4s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px 0 rgba(238,9,121,0.25), 0 2px 24px 0 rgba(24,90,157,0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #db2727;
+            text-shadow: 2px 2px 4px #ece2e2;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .payment-form input[type="text"],
+        .payment-form input[type="password"],
+        .payment-form select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #db2727;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.9);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .payment-form input:focus,
+        .payment-form select:focus {
+            outline: none;
+            border-color: #43cea2;
+            box-shadow: 0 0 0 3px rgba(67, 206, 162, 0.1);
+        }
+        
+        .payment-form input[type="submit"] {
+            background: linear-gradient(135deg, #4CAF50 0%, #43cea2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        
+        .payment-form input[type="submit"]:hover {
+            background: linear-gradient(135deg, #ec2727 0%, #ff6a00 100%);
+            transform: scale(1.05);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .payment-method-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-method-selector label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .payment-method-selector label:hover {
+            border-color: #43cea2;
+            background: rgba(67, 206, 162, 0.1);
+        }
+        
+        .payment-method-selector input[type="radio"]:checked + label {
+            border-color: #43cea2;
+            background: rgba(67, 206, 162, 0.2);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 900px) {
+            #main-header {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px 8px;
+            }
+            .header-left {
+                justify-content: center;
+                margin-bottom: 8px;
+            }
+            .header-nav {
+                justify-content: center;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+            .header-right {
+                justify-content: center;
+                margin-left: 0;
+                margin-bottom: 8px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            .site-title {
+                font-size: 1.5rem;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.95rem;
+            }
+        }
+        /* Order summary styles */
+        .order-summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(248,249,250,0.8);
+            border-radius: 12px;
+            border: 2px solid #db2727;
+        }
+        
+        .payment-fields-hidden {
+            display: none;
+        }
+
+        /* Embedded Chatbot Popup Styles */
+        .chatbot-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-button {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(67, 206, 162, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+            position: relative;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(67, 206, 162, 0.4);
+            background: linear-gradient(135deg, #db2727 0%, #ff6a00 100%);
+        }
+
+        .chatbot-button i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .chatbot-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid #333;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        .chatbot-button:hover .chatbot-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chatbot-popup {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            overflow: hidden;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .chatbot-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatbot-content {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 60px);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bot-message, .user-message {
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .bot-message {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            align-self: flex-start;
+            border: 1px solid #90caf9;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .payment-error-message {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border: 1px solid #f44336;
+            color: #c62828;
+            align-self: flex-start;
+        }
+
+        .chatbot-input-area {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .chatbot-input:focus {
+            border-color: #43cea2;
+            box-shadow: 0 0 0 2px rgba(67, 206, 162, 0.2);
+        }
+
+        .chatbot-send {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-send i {
+            color: white;
+            font-size: 14px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Responsive design for chatbot */
+        @media (max-width: 768px) {
+            .chatbot-widget {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .chatbot-button {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .chatbot-button i {
+                font-size: 20px;
+            }
+            
+            .chatbot-tooltip {
+                right: 60px;
+                font-size: 12px;
+            }
+            
+            .chatbot-popup {
+                width: 320px;
+                height: 400px;
+                right: 15px;
+                bottom: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chatbot-popup {
+                width: 280px;
+                height: 350px;
+                right: 10px;
+                bottom: 70px;
+            }
+            
+            .chatbot-messages {
+                padding: 15px;
+            }
+            
+            .chatbot-input-area {
+                padding: 10px 15px;
+            }
+        }
     </style>
 </head>
 <body>
-        <header id="main-header">
-            <div class="header-left">
-                <img id="logo" src="./images/logo.png" alt="Logo">
-                <span class="site-title">NextGenKart</span>
+    <header id="main-header">
+        <div class="header-left">
+            <img id="logo" src="./images/logo.png" alt="Logo">
+            <span class="site-title">NextGenKart</span>
+        </div>
+        <nav class="header-nav" aria-label="Main Navigation">
+            <a class="nav-btn" href="/">Home</a>
+            <a class="nav-btn" th:href="@{/Aboutus}">About</a>
+            <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
+            <a class="nav-btn" th:href="@{/help}">Help</a>
+            <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
+        </nav>
+        <div class="header-right">
+            <button id="profile-pic" onclick="toggleProfileMenu()" type="button">
+            <img th:src="@{/images/logo.jpg}" th:alt="'Logo of ' + ${companyName}" alt="Logo" id="logo"/>
+            </button>
+            <div id="profile-menu" class="profile-menu">
+                <a th:href="@{/cart}">Cart</a>
+                <a th:href="@{/orders}">Orders</a>
+                <a th:href="@{/Profile}">Profile</a>
+                <a th:href="@{/feedback}">Feedback</a>
+                <a th:href="@{/logout}">Log Out</a>
             </div>
-            <nav class="header-nav" aria-label="Main Navigation">
-                <a class="nav-btn" href="/">Home</a>
-                <a class="nav-btn" th:href="@{/Aboutus}">About</a>
-                <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
-                <a class="nav-btn" th:href="@{/help}">Help</a>
-                <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
-            </nav>
-            <div class="header-right">
-                <img id="profile-pic" src="./images/profile.jpeg" alt="Profile">
-                <div id="profile-menu" th:if="${profileMenuVisible}" class="profile-menu">
-                    <a th:href="@{/cart}">Cart</a>
-                    <a th:href="@{/orders}">Orders</a>
-                    <a th:href="@{/Profile}">Profile</a>
-                    <a th:href="@{/feedback}">Feedback</a>
-                    <a th:href="@{/logout}">Log Out</a>
-                </div>
-            </div>
-        </header>
-        <h1>Payment Page</h1>
+        </div>
+    </header>
+
     <div class="container">
+        <h1>Payment Page</h1>
         <!-- Display product information -->
-        <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+        <div class="order-summary">
             <h3>Order Summary</h3>
             <p><strong>Product:</strong> <span th:text="${title}"></span></p>
             <p><strong>Price:</strong> $<span th:text="${price}"></span></p>
@@ -114,7 +630,7 @@
             </select>
             
             <!-- Credit/Debit Card Fields -->
-            <div id="card_fields" style="display: none;">
+            <div id="card_fields" class="payment-fields-hidden">
                 <label for="card_number">Card Number:</label>
                 <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456">
                 
@@ -126,13 +642,13 @@
             </div>
             
             <!-- PayPal Fields -->
-            <div id="paypal_fields" style="display: none;">
+            <div id="paypal_fields" class="payment-fields-hidden">
                 <label for="paypal_email">PayPal Email:</label>
                 <input type="email" id="paypal_email" name="paypal_email" placeholder="your.email@example.com">
             </div>
             
             <!-- UPI Fields -->
-            <div id="upi_fields" style="display: none;">
+            <div id="upi_fields" class="payment-fields-hidden">
                 <label for="upi_id">UPI ID:</label>
                 <input type="text" id="upi_id" name="upi_id" placeholder="yourname@paytm">
             </div>
@@ -141,13 +657,42 @@
         </form>
         
         <script>
+            // Profile menu functionality
+            function toggleProfileMenu() {
+                var menu = document.getElementById('profile-menu');
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Close profile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                var profilePic = document.getElementById('profile-pic');
+                var profileMenu = document.getElementById('profile-menu');
+                
+                if (!profilePic.contains(event.target)) {
+                    profileMenu.style.display = 'none';
+                }
+            });
+            
+            // Session heartbeat functionality
+            function sendHeartbeat() {
+                fetch('/session/heartbeat', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                }).catch(function(error) {
+                    console.log('Heartbeat failed:', error);
+                });
+            }
+
+            // Send heartbeat every 5 minutes
+            setInterval(sendHeartbeat, 300000);
+
             function showPaymentFields() {
                 var paymentMethod = document.getElementById('payment_method').value;
                 
                 // Hide all fields
-                document.getElementById('card_fields').style.display = 'none';
-                document.getElementById('paypal_fields').style.display = 'none';
-                document.getElementById('upi_fields').style.display = 'none';
+                document.getElementById('card_fields').classList.add('payment-fields-hidden');
+                document.getElementById('paypal_fields').classList.add('payment-fields-hidden');
+                document.getElementById('upi_fields').classList.add('payment-fields-hidden');
                 
                 // Clear required attributes
                 document.getElementById('card_number').removeAttribute('required');
@@ -158,19 +703,115 @@
                 
                 // Show relevant fields and set required
                 if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
-                    document.getElementById('card_fields').style.display = 'block';
+                    document.getElementById('card_fields').classList.remove('payment-fields-hidden');
                     document.getElementById('card_number').setAttribute('required', 'true');
                     document.getElementById('expiry_date').setAttribute('required', 'true');
                     document.getElementById('cvv').setAttribute('required', 'true');
                 } else if (paymentMethod === 'PayPal') {
-                    document.getElementById('paypal_fields').style.display = 'block';
+                    document.getElementById('paypal_fields').classList.remove('payment-fields-hidden');
                     document.getElementById('paypal_email').setAttribute('required', 'true');
                 } else if (paymentMethod === 'UPI') {
-                    document.getElementById('upi_fields').style.display = 'block';
+                    document.getElementById('upi_fields').classList.remove('payment-fields-hidden');
                     document.getElementById('upi_id').setAttribute('required', 'true');
                 }
             }
         </script>
     </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-widget">
+        <button class="chatbot-button" onclick="toggleChatbot()" title="Need Help? Chat with us!">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-tooltip">Need Help? Chat with us!</span>
+        </button>
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div class="chatbot-popup" id="chatbotPopup">
+        <div class="chatbot-header">
+            <h3>AI Shopping Assistant</h3>
+            <button class="chatbot-close" onclick="toggleChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-content">
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="bot-message">
+                    <b>AI Assistant:</b> Hello! I'm here to help you with your shopping questions. How can I assist you today?
+                </div>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your message here..." onkeypress="handleChatKeyPress(event)">
+                <button class="chatbot-send" onclick="sendChatMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleChatbot() {
+            const popup = document.getElementById('chatbotPopup');
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            } else {
+                popup.style.display = 'block';
+                document.getElementById('chatbotInput').focus();
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatbotInput');
+            const userMessage = input.value.trim();
+            if (!userMessage) return;
+
+            const messagesDiv = document.getElementById('chatbotMessages');
+            
+            // Add user message
+            messagesDiv.innerHTML += `<div class="user-message"><b>You:</b> ${userMessage}</div>`;
+            
+            // Clear input
+            input.value = '';
+            
+            // Scroll to bottom
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            try {
+                // Send to chatbot backend
+                const response = await fetch('http://localhost:5000/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+                
+                const data = await response.json();
+                messagesDiv.innerHTML += `<div class="bot-message"><b>AI Assistant:</b> ${data.response}</div>`;
+            } catch (error) {
+                console.error('Chatbot error:', error);
+                messagesDiv.innerHTML += `<div class="payment-error-message"><b>Error:</b> Unable to connect to chatbot service. Please try again later.</div>`;
+            }
+            
+            // Scroll to bottom again
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // Close chatbot when clicking outside
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('chatbotPopup');
+            const widget = document.querySelector('.chatbot-widget');
+            
+            if (popup.style.display === 'block' && 
+                !popup.contains(event.target) && 
+                !widget.contains(event.target)) {
+                popup.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

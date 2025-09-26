@@ -350,6 +350,11 @@ public class DemoController {
         return "Profile";
     }
 
+    @GetMapping("/virtualdressing")
+    public String virtualDressingPage() {
+        return "virtualdressing";
+    }
+
     @GetMapping("/help")
     public String helpRedirect() {
         // redirect help to chatbot
