@@ -17,11 +17,12 @@ public class DatabaseConfig {
 
         System.out.println("=== DATABASE CONFIGURATION ===");
         System.out.println("DATABASE_URL env variable: " + (databaseUrl != null ? "EXISTS" : "NOT SET"));
-        
+
         if (databaseUrl != null && !databaseUrl.trim().isEmpty()) {
             System.out.println("DATABASE_URL value (masked): " + maskPassword(databaseUrl));
-            System.out.println("DATABASE_URL starts with: " + (databaseUrl.length() > 20 ? databaseUrl.substring(0, 20) : databaseUrl));
-            
+            System.out.println("DATABASE_URL starts with: "
+                    + (databaseUrl.length() > 20 ? databaseUrl.substring(0, 20) : databaseUrl));
+
             if (databaseUrl.startsWith("postgres://")) {
                 // Convert Render's postgres:// URL to jdbc:postgresql://
                 databaseUrl = databaseUrl.replace("postgres://", "jdbc:postgresql://");
@@ -32,8 +33,16 @@ public class DatabaseConfig {
                 System.out.println("Added jdbc: prefix to postgresql://");
             }
             
+            // Add default port if missing (Render format: user:pass@host/db without port)
+            if (databaseUrl.startsWith("jdbc:postgresql://") && !databaseUrl.matches(".*:\\d+/.*")) {
+                // Insert :5432 before the /database part
+                databaseUrl = databaseUrl.replaceFirst("(@[^/]+)/", "$1:5432/");
+                System.out.println("Added default port :5432 to URL");
+            }
+
             // Parse the URL to extract components
             if (databaseUrl.startsWith("jdbc:postgresql://")) {
+                System.out.println("Final JDBC URL (masked): " + maskPassword(databaseUrl));
                 System.out.println("✅ Using DATABASE_URL from environment");
                 return DataSourceBuilder.create()
                         .url(databaseUrl)
