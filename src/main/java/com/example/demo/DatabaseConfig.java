@@ -20,33 +20,59 @@ public class DatabaseConfig {
 
         if (databaseUrl != null && !databaseUrl.trim().isEmpty()) {
             System.out.println("DATABASE_URL value (masked): " + maskPassword(databaseUrl));
-            System.out.println("DATABASE_URL starts with: "
-                    + (databaseUrl.length() > 20 ? databaseUrl.substring(0, 20) : databaseUrl));
-
-            if (databaseUrl.startsWith("postgres://")) {
-                // Convert Render's postgres:// URL to jdbc:postgresql://
-                databaseUrl = databaseUrl.replace("postgres://", "jdbc:postgresql://");
-                System.out.println("Converted postgres:// to jdbc:postgresql://");
-            } else if (databaseUrl.startsWith("postgresql://")) {
-                // Convert postgresql:// URL to jdbc:postgresql://
-                databaseUrl = "jdbc:" + databaseUrl;
-                System.out.println("Added jdbc: prefix to postgresql://");
-            }
             
-            // Add default port if missing (Render format: user:pass@host/db without port)
-            if (databaseUrl.startsWith("jdbc:postgresql://") && !databaseUrl.matches(".*:\\d+/.*")) {
-                // Insert :5432 before the /database part
-                databaseUrl = databaseUrl.replaceFirst("(@[^/]+)/", "$1:5432/");
-                System.out.println("Added default port :5432 to URL");
-            }
-
-            // Parse the URL to extract components
-            if (databaseUrl.startsWith("jdbc:postgresql://")) {
-                System.out.println("Final JDBC URL (masked): " + maskPassword(databaseUrl));
-                System.out.println("✅ Using DATABASE_URL from environment");
-                return DataSourceBuilder.create()
-                        .url(databaseUrl)
-                        .build();
+            // Parse PostgreSQL URL format: postgres://user:password@host:port/database
+            if (databaseUrl.startsWith("postgres://") || databaseUrl.startsWith("postgresql://")) {
+                try {
+                    // Extract components from URL
+                    String url = databaseUrl.replaceFirst("postgres(ql)?://", "");
+                    
+                    // Split user:password@host:port/database
+                    String[] userAndRest = url.split("@", 2);
+                    if (userAndRest.length != 2) {
+                        throw new IllegalArgumentException("Invalid DATABASE_URL format");
+                    }
+                    
+                    String[] userPass = userAndRest[0].split(":", 2);
+                    String username = userPass[0];
+                    String password = userPass.length > 1 ? userPass[1] : "";
+                    
+                    // Split host:port/database
+                    String hostAndDb = userAndRest[1];
+                    String host;
+                    int port = 5432; // default
+                    String database;
+                    
+                    // Check if port is specified
+                    if (hostAndDb.contains(":") && hostAndDb.indexOf(":") < hostAndDb.indexOf("/")) {
+                        String[] hostPort = hostAndDb.split("/", 2)[0].split(":", 2);
+                        host = hostPort[0];
+                        port = Integer.parseInt(hostPort[1]);
+                        database = hostAndDb.split("/", 2)[1];
+                    } else {
+                        // No port specified
+                        String[] parts = hostAndDb.split("/", 2);
+                        host = parts[0];
+                        database = parts[1];
+                    }
+                    
+                    // Build JDBC URL
+                    String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", host, port, database);
+                    
+                    System.out.println("Parsed - Host: " + host + ", Port: " + port + ", DB: " + database);
+                    System.out.println("Final JDBC URL (masked): " + maskPassword(jdbcUrl));
+                    System.out.println("✅ Using DATABASE_URL from environment");
+                    
+                    return DataSourceBuilder.create()
+                            .url(jdbcUrl)
+                            .username(username)
+                            .password(password)
+                            .build();
+                            
+                } catch (Exception e) {
+                    System.out.println("❌ Error parsing DATABASE_URL: " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
         }
 
