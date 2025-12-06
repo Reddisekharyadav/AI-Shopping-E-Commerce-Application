@@ -4,8 +4,11 @@ import openai
 from openai.types.chat import ChatCompletionMessageParam
 import sqlite3
 from functools import lru_cache
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, 
+            static_folder='static',
+            static_url_path='/static')
 CORS(app)
 
 DATABASE_FILE = "database.db"

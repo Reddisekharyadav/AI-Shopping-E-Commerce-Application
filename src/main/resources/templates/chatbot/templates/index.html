@@ -1,10 +1,9 @@
-<!-- Migrated from static -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Shopping Chatbot</title>
+    <title>AI Shopping Chatbot - Help</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* General styles */
@@ -224,100 +223,137 @@
         #sendButton:hover {
             background: #38bdf8;
         }
+
+        .user-message {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            text-align: right;
+        }
+
+        .bot-message {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation Header -->
     <header id="main-header">
         <div class="header-left">
-            <img id="logo" src="images/logo.jpg" alt="Logo">
+            <img id="logo" src="/static/images/logo.jpg" alt="Logo">
             <span class="site-title">NextGenKart</span>
         </div>
         <nav class="header-nav" aria-label="Main Navigation">
-            <a class="nav-btn" th:href="@{/home}">Home</a>
-            <a class="nav-btn" th:href="@{/Aboutus}">About</a>
-            <a class="nav-btn" th:href="@{/Contact}">Contact Us</a>
-            <a class="nav-btn" th:href="@{/virtualdressing}"><i class="fas fa-user-astronaut"></i> Virtual Dressing</a>
-            <a class="nav-btn" th:href="@{/help}">Help</a>
-            <a class="nav-btn" th:href="@{/orders/all}">Orders</a>
+            <a class="nav-btn" href="/home">Home</a>
+            <a class="nav-btn" href="/Aboutus">About</a>
+            <a class="nav-btn" href="/Contact">Contact Us</a>
+            <a class="nav-btn" href="/virtualdressing"><i class="fas fa-user-astronaut"></i> Virtual Dressing</a>
+            <a class="nav-btn" href="/help">Help</a>
+            <a class="nav-btn" href="/orders/all">Orders</a>
         </nav>
         <div class="header-right">
             <button id="profile-pic" onclick="toggleProfileMenu()" title="Open profile menu" aria-label="Open profile menu">
-                <img src="images/profile.jpeg" alt="Profile">
+                <img src="/static/images/profile.jpeg" alt="Profile">
             </button>
             <div id="profile-menu" class="profile-menu">
-                <a th:href="@{/cart}">Cart</a>
-                <a th:href="@{/orders}">Orders</a>
-                <a th:href="@{/Profile}">Profile</a>
-                <a th:href="@{/feedback}">Feedback</a>
-                <a th:href="@{/logout}">Log Out</a>
+                <a href="/cart">Cart</a>
+                <a href="/orders">Orders</a>
+                <a href="/Profile">Profile</a>
+                <a href="/feedback">Feedback</a>
+                <a href="/logout">Log Out</a>
             </div>
         </div>
     </header>
 
     <!-- Chatbot Content -->
-    <h1>AI Shopping Chatbot</h1>
+    <h1>AI Shopping Assistant</h1>
     <div id="chatbox"></div>
     <div class="chat-container">
-        <input id="userInput" type="text" placeholder="Type your message here..." onkeypress="if(event.key === 'Enter') document.getElementById('sendButton').click()">
-        <button id="sendButton">Send</button>
+        <input id="userInput" type="text" placeholder="Ask me anything about shopping..." onkeypress="if(event.key === 'Enter') sendMessage()">
+        <button id="sendButton" onclick="sendMessage()">Send</button>
     </div>
-</body>
-<script>
-document.getElementById('sendButton').onclick = async function() {
-    const userInput = document.getElementById('userInput').value;
-    if (!userInput) return;
-    // Show user message
-    const chatbox = document.getElementById('chatbox');
-    chatbox.innerHTML += `<div><b>You:</b> ${userInput}</div>`;
-    // Send to backend
-    try {
-        const response = await fetch('/api/chatbot/ask', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userInput })
-        });
-        const data = await response.json();
-        if (data.error) {
-            chatbox.innerHTML += `<div style="color:red"><b>Error:</b> ${data.error}</div>`;
-        } else {
-            chatbox.innerHTML += `<div><b>Bot:</b> ${data.response}</div>`;
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) return;
+
+            const chatbox = document.getElementById('chatbox');
+            
+            // Show user message
+            chatbox.innerHTML += `<div class="user-message"><b>You:</b> ${userInput}</div>`;
+            document.getElementById('userInput').value = '';
+            
+            // Scroll to bottom
+            chatbox.scrollTop = chatbox.scrollHeight;
+
+            try {
+                // Send to Flask backend
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userInput })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    chatbox.innerHTML += `<div class="error-message"><b>Error:</b> ${data.error}</div>`;
+                } else {
+                    chatbox.innerHTML += `<div class="bot-message"><b>AI Assistant:</b> ${data.response}</div>`;
+                }
+            } catch (e) {
+                chatbox.innerHTML += `<div class="error-message"><b>Error:</b> Could not connect to chatbot service. Please try again.</div>`;
+                console.error('Chatbot error:', e);
+            }
+
+            // Scroll to bottom again
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
-    } catch (e) {
-        chatbox.innerHTML += `<div style="color:red"><b>Error:</b> Could not connect to chatbot backend.</div>`;
-    }
-    document.getElementById('userInput').value = '';
-};
 
-// Toggle profile menu
-function toggleProfileMenu() {
-    const profileMenu = document.getElementById('profile-menu');
-    if (profileMenu.style.display === 'none' || profileMenu.style.display === '') {
-        profileMenu.style.display = 'block';
-    } else {
-        profileMenu.style.display = 'none';
-    }
-}
+        // Toggle profile menu
+        function toggleProfileMenu() {
+            const profileMenu = document.getElementById('profile-menu');
+            if (profileMenu.style.display === 'none' || profileMenu.style.display === '') {
+                profileMenu.style.display = 'block';
+            } else {
+                profileMenu.style.display = 'none';
+            }
+        }
 
-// Close profile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const profilePic = document.getElementById('profile-pic');
-    const profileMenu = document.getElementById('profile-menu');
-    if (!profilePic.contains(event.target) && !profileMenu.contains(event.target)) {
-        profileMenu.style.display = 'none';
-    }
-});
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profilePic = document.getElementById('profile-pic');
+            const profileMenu = document.getElementById('profile-menu');
+            if (!profilePic.contains(event.target) && !profileMenu.contains(event.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
 
-  // Add animations using Framer Motion
-  document.addEventListener("DOMContentLoaded", () => {
-    const chatbox = document.getElementById("chatbox");
-    chatbox.style.opacity = 0;
-    chatbox.style.transform = "translateY(20px)";
-    setTimeout(() => {
-      chatbox.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-      chatbox.style.opacity = 1;
-      chatbox.style.transform = "translateY(0)";
-    }, 100);
-  });
-</script>
+        // Add initial animation
+        document.addEventListener("DOMContentLoaded", () => {
+            const chatbox = document.getElementById("chatbox");
+            chatbox.style.opacity = 0;
+            chatbox.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                chatbox.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+                chatbox.style.opacity = 1;
+                chatbox.style.transform = "translateY(0)";
+            }, 100);
+        });
+    </script>
+</body>
 </html>

@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,11 @@ public class ClothesService {
     private final RestTemplate restTemplate;
 
     public ClothesService() {
-        this.restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); // 5 seconds connection timeout
+        factory.setReadTimeout(10000); // 10 seconds read timeout
+        RestTemplate template = new RestTemplate(factory);
+        this.restTemplate = template;
     }
 
     public List<Product> fetchClothesFromApis() {

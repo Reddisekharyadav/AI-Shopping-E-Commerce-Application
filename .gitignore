@@ -9,6 +9,11 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Database Files ###
+*.db
+database.db
+query
+
 ### STS ###
 .apt_generated
 .classpath

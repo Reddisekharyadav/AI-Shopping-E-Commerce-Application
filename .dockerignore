@@ -1,0 +1,14 @@
+target/
+!target/demo-0.0.1-SNAPSHOT.jar
+.git
+.gitignore
+*.md
+*.bat
+*.ps1
+mvnw
+mvnw.cmd
+.mvn
+src/
+pom.xml
+database.db
+*.log
