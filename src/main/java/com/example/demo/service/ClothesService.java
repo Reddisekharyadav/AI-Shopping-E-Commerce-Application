@@ -21,13 +21,13 @@ public class ClothesService {
         factory.setConnectTimeout(5000); // 5 seconds connection timeout
         factory.setReadTimeout(10000); // 10 seconds read timeout
         RestTemplate template = new RestTemplate(factory);
-        
+
         // Add User-Agent header to avoid bot detection
         template.getInterceptors().add((request, body, execution) -> {
             request.getHeaders().add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
             return execution.execute(request, body);
         });
-        
+
         this.restTemplate = template;
     }
 
@@ -36,7 +36,7 @@ public class ClothesService {
 
         // Fetch from Dummy JSON API (primary source)
         try {
-            DummyJsonResponse dummyJsonResponse = restTemplate.getForObject("https://dummyjson.com/products",
+            DummyJsonResponse dummyJsonResponse = restTemplate.getForObject("https://dummyjson.com/products?limit=100",
                     DummyJsonResponse.class);
             if (dummyJsonResponse != null && dummyJsonResponse.getProducts() != null) {
                 products.addAll(dummyJsonResponse.getProducts());
@@ -44,20 +44,6 @@ public class ClothesService {
             }
         } catch (Exception ex) {
             logger.error("Failed to fetch from Dummy JSON API: {}", ex.getMessage());
-        }
-
-        // Fallback: Try Platzi Fake Store API (no Cloudflare protection)
-        if (products.isEmpty()) {
-            try {
-                Product[] platziProducts = restTemplate.getForObject("https://api.escuelajs.co/api/v1/products",
-                        Product[].class);
-                if (platziProducts != null) {
-                    products.addAll(List.of(platziProducts));
-                    logger.info("Successfully fetched {} products from Platzi API", products.size());
-                }
-            } catch (Exception ex) {
-                logger.error("Failed to fetch from Platzi API: {}", ex.getMessage());
-            }
         }
 
         // Fallback logic: Add default products if no products were fetched
