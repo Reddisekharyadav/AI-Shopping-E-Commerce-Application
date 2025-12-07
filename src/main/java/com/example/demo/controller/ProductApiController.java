@@ -17,57 +17,42 @@ public class ProductApiController {
         List<Product> products = new ArrayList<>();
 
         // Men's Clothing
-        products.add(new Product("Classic White T-Shirt", 19.99,
-                "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"));
-        products.add(
-                new Product("Men's Casual Slim Fit", 15.99, "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg"));
-        products.add(
-                new Product("Men's Cotton Jacket", 55.99, "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"));
-        products.add(new Product("Men's Casual Premium Slim Fit T-Shirts", 22.30,
-                "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"));
+        products.add(new Product("Classic White T-Shirt", 19.99, "/products/tshirt1.jpg"));
+        products.add(new Product("Men's Casual Slim Fit", 15.99, "/products/casual-fit.jpg"));
+        products.add(new Product("Men's Cotton Jacket", 55.99, "/products/jacket1.jpg"));
+        products.add(new Product("Men's Casual Premium Slim Fit T-Shirts", 22.30, "/products/tshirt1.jpg"));
 
         // Women's Clothing
         products.add(new Product("Women's Short Sleeve Moisture Wicking Athletic T-Shirt", 7.95,
-                "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"));
+                "/products/women-tshirt.jpg"));
         products.add(new Product("Women's Removable Hooded Faux Leather Moto Biker Jacket", 29.95,
-                "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg"));
-        products.add(new Product("Women's Rain Jacket Windbreaker", 39.99,
-                "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"));
-        products.add(new Product("Women's 3-in-1 Snowboard Jacket", 56.99,
-                "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"));
+                "/products/leather-jacket.jpg"));
+        products.add(new Product("Women's Rain Jacket Windbreaker", 39.99, "/products/rain-jacket.jpg"));
+        products.add(new Product("Women's 3-in-1 Snowboard Jacket", 56.99, "/products/jacket1.jpg"));
 
         // Dresses
-        products.add(new Product("Women's Floral Print Dress", 45.00,
-                "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg"));
-        products.add(
-                new Product("Summer Beach Dress", 35.50, "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg"));
+        products.add(new Product("Women's Floral Print Dress", 45.00, "/products/dress1.jpg"));
+        products.add(new Product("Summer Beach Dress", 35.50, "/products/beach-dress.jpg"));
 
         // Jeans & Pants
-        products.add(
-                new Product("Men's Slim Fit Jeans", 49.99, "https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg"));
-        products.add(new Product("Women's High Waist Skinny Jeans", 42.99,
-                "https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_.jpg"));
+        products.add(new Product("Men's Slim Fit Jeans", 49.99, "/products/mens-jeans.jpg"));
+        products.add(new Product("Women's High Waist Skinny Jeans", 42.99, "/products/womens-jeans.jpg"));
 
         // Shirts
-        products.add(
-                new Product("Men's Formal Shirt", 28.50, "https://fakestoreapi.com/img/71z3kpMAYsL._AC_UY879_.jpg"));
-        products.add(new Product("Women's Blouse", 24.99, "https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg"));
+        products.add(new Product("Men's Formal Shirt", 28.50, "/products/formal-shirt.jpg"));
+        products.add(new Product("Women's Blouse", 24.99, "/products/dress1.jpg"));
 
         // Hoodies & Sweatshirts
-        products.add(new Product("Unisex Hoodie", 38.00, "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"));
-        products.add(
-                new Product("Women's Sweatshirt", 32.50, "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"));
+        products.add(new Product("Unisex Hoodie", 38.00, "/products/hoodie.jpg"));
+        products.add(new Product("Women's Sweatshirt", 32.50, "/products/sweatshirt.jpg"));
 
         // Shorts
-        products.add(
-                new Product("Men's Sports Shorts", 18.99, "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg"));
-        products.add(
-                new Product("Women's Denim Shorts", 26.50, "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg"));
+        products.add(new Product("Men's Sports Shorts", 18.99, "/products/shorts-mens.jpg"));
+        products.add(new Product("Women's Denim Shorts", 26.50, "/products/dress1.jpg"));
 
         // Activewear
-        products.add(
-                new Product("Compression T-Shirt", 21.99, "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"));
-        products.add(new Product("Yoga Pants", 34.99, "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg"));
+        products.add(new Product("Compression T-Shirt", 21.99, "/products/compression.jpg"));
+        products.add(new Product("Yoga Pants", 34.99, "/products/yoga-pants.jpg"));
 
         return products;
     }

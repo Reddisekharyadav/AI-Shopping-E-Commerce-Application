@@ -47,22 +47,14 @@ public class ClothesService {
             logger.error("Failed to fetch from local API: {}", ex.getMessage());
 
             // Fallback: Add products directly if API call fails (e.g., during startup)
-            products.add(new Product("Classic White T-Shirt", 19.99,
-                    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"));
-            products.add(new Product("Men's Casual Slim Fit", 15.99,
-                    "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg"));
-            products.add(new Product("Men's Cotton Jacket", 55.99,
-                    "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"));
-            products.add(new Product("Women's Short Sleeve T-Shirt", 7.95,
-                    "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"));
-            products.add(new Product("Women's Leather Jacket", 29.95,
-                    "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg"));
-            products.add(new Product("Women's Rain Jacket", 39.99,
-                    "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"));
-            products.add(new Product("Women's Snowboard Jacket", 56.99,
-                    "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"));
-            products.add(new Product("Women's Floral Dress", 45.00,
-                    "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg"));
+            products.add(new Product("Classic White T-Shirt", 19.99, "/products/tshirt1.jpg"));
+            products.add(new Product("Men's Casual Slim Fit", 15.99, "/products/casual-fit.jpg"));
+            products.add(new Product("Men's Cotton Jacket", 55.99, "/products/jacket1.jpg"));
+            products.add(new Product("Women's Short Sleeve T-Shirt", 7.95, "/products/women-tshirt.jpg"));
+            products.add(new Product("Women's Leather Jacket", 29.95, "/products/leather-jacket.jpg"));
+            products.add(new Product("Women's Rain Jacket", 39.99, "/products/rain-jacket.jpg"));
+            products.add(new Product("Women's Snowboard Jacket", 56.99, "/products/jacket1.jpg"));
+            products.add(new Product("Women's Floral Dress", 45.00, "/products/dress1.jpg"));
             logger.info("Added {} fallback products", products.size());
         }
 
