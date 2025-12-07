@@ -34,38 +34,38 @@ public class ClothesService {
     public List<Product> fetchClothesFromApis() {
         List<Product> products = new ArrayList<>();
 
-        // Fetch from Dummy JSON API (primary source)
+        // Fetch from local API endpoint (no external dependencies)
         try {
-            DummyJsonResponse dummyJsonResponse = restTemplate.getForObject("https://dummyjson.com/products?limit=100",
-                    DummyJsonResponse.class);
-            if (dummyJsonResponse != null && dummyJsonResponse.getProducts() != null) {
-                products.addAll(dummyJsonResponse.getProducts());
-                logger.info("Successfully fetched {} products from DummyJSON API", products.size());
+            String baseUrl = System.getProperty("app.baseUrl", "http://localhost:8080");
+            Product[] localProducts = restTemplate.getForObject(baseUrl + "/api/products",
+                    Product[].class);
+            if (localProducts != null) {
+                products.addAll(List.of(localProducts));
+                logger.info("Successfully fetched {} products from local API", products.size());
             }
         } catch (Exception ex) {
-            logger.error("Failed to fetch from Dummy JSON API: {}", ex.getMessage());
-        }
+            logger.error("Failed to fetch from local API: {}", ex.getMessage());
 
-        // Fallback logic: Add default products if no products were fetched
-        if (products.isEmpty()) {
-            logger.warn("No products fetched from APIs. Adding default products.");
-            products.add(new Product("Default T-Shirt", 9.99, "/images/default-tshirt.jpg"));
-            products.add(new Product("Default Jeans", 19.99, "/images/default-jeans.jpg"));
+            // Fallback: Add products directly if API call fails (e.g., during startup)
+            products.add(new Product("Classic White T-Shirt", 19.99,
+                    "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"));
+            products.add(new Product("Men's Casual Slim Fit", 15.99,
+                    "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg"));
+            products.add(new Product("Men's Cotton Jacket", 55.99,
+                    "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"));
+            products.add(new Product("Women's Short Sleeve T-Shirt", 7.95,
+                    "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg"));
+            products.add(new Product("Women's Leather Jacket", 29.95,
+                    "https://fakestoreapi.com/img/81XH0e8fefL._AC_UY879_.jpg"));
+            products.add(new Product("Women's Rain Jacket", 39.99,
+                    "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"));
+            products.add(new Product("Women's Snowboard Jacket", 56.99,
+                    "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg"));
+            products.add(new Product("Women's Floral Dress", 45.00,
+                    "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg"));
+            logger.info("Added {} fallback products", products.size());
         }
 
         return products;
-    }
-
-    // Inner class to handle Dummy JSON API response
-    private static class DummyJsonResponse {
-        private List<Product> products;
-
-        public List<Product> getProducts() {
-            return products;
-        }
-
-        public void setProducts(List<Product> products) {
-            this.products = products;
-        }
     }
 }
