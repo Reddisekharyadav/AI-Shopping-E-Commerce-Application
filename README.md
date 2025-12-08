@@ -1,5 +1,32 @@
 # AI Shopping E-Commerce Application
 
+## 🚀 Live Demo
+**URL:** https://nextgenkart-app.onrender.com
+
+### ⚡ First Visit Loading Time
+The app is hosted on Render's free tier, which means:
+- **First visit:** ~30-60 seconds (server wakes from sleep)
+- **Subsequent visits:** Instant loading ⚡
+- The server sleeps after 15 minutes of inactivity
+
+### 🔧 Speed Optimization Options
+
+#### Option 1: Keep-Alive Service (Free)
+Use a free cron service to ping your app every 10 minutes:
+- **UptimeRobot** (https://uptimerobot.com) - Free tier: 50 monitors
+- **Cron-job.org** (https://cron-job.org) - Free unlimited cron jobs
+
+**Setup on UptimeRobot:**
+1. Create free account
+2. Add Monitor → HTTP(s)
+3. URL: `https://nextgenkart-app.onrender.com`
+4. Interval: 5 minutes
+5. Save
+
+#### Option 2: Upgrade Render Plan
+- **Starter Plan:** $7/month - Always on, no cold starts
+- **Standard Plan:** $25/month - Better performance
+
 ## Overview
 AI Shopping is a modern e-commerce web application built with Spring Boot, Thymeleaf, and Java. It features user authentication, product browsing, cart management, order history, payment integration, and an AI-powered chatbot for enhanced shopping experience.
 
