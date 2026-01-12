@@ -8,6 +8,7 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.ClothesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import java.util.UUID;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
@@ -138,7 +139,7 @@ public class DemoController {
             order.setColor(color);
             order.setSize(size);
             order.setPaymentMethod(paymentMethod);
-            order.setStatus(Order.OrderStatus.CONFIRMED);
+            order.setStatus(Order.OrderStatus.CONFIRMED.toString());
             orderRepository.save(order);
         }
         return "redirect:/orderConfirmation";
@@ -240,7 +241,7 @@ public class DemoController {
     }
 
     @PostMapping("/cart/delete")
-    public String deleteCartItem(@RequestParam Long id, HttpSession session) {
+    public String deleteCartItem(@RequestParam UUID id, HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
             return "redirect:/Login";
@@ -287,7 +288,7 @@ public class DemoController {
             order.setColor(color);
             order.setSize(size);
             order.setPaymentMethod(paymentMethod);
-            order.setStatus(Order.OrderStatus.CONFIRMED);
+            order.setStatus("CONFIRMED");
 
             orderRepository.save(order);
             logger.info("Order confirmed successfully for user: {}", username);

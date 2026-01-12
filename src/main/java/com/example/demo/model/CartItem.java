@@ -1,54 +1,62 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.Column;
+import java.time.Instant;
+import java.util.UUID;
 
-@Entity
-@Table(name = "cart_items")
+@Table("cart_items")
 public class CartItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @PrimaryKey
+    private UUID id;
 
-    @Column(nullable = false)
+    @Column("username")
     private String username;
 
-    @Column(nullable = false)
+    @Column("product_title")
     private String productTitle;
 
-    @Column(nullable = false)
+    @Column("product_price")
     private Double productPrice;
 
-    @Column(length = 1000)
+    @Column("product_image")
     private String productImage;
 
+    @Column
     private String color;
+
+    @Column
     private String size;
+
+    @Column
     private Integer quantity = 1;
 
-    @Column(name = "added_at")
-    private LocalDateTime addedAt = LocalDateTime.now();
+    @Column("added_at")
+    private Instant addedAt = Instant.now();
 
     // Default constructor
     public CartItem() {
+        this.id = UUID.randomUUID();
     }
 
     // Constructor
     public CartItem(String username, String productTitle, Double productPrice, String productImage) {
+        this.id = UUID.randomUUID();
         this.username = username;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.productImage = productImage;
-        this.addedAt = LocalDateTime.now();
+        this.addedAt = Instant.now();
     }
 
     // Getters and setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -108,11 +116,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getAddedAt() {
+    public Instant getAddedAt() {
         return addedAt;
     }
 
-    public void setAddedAt(LocalDateTime addedAt) {
+    public void setAddedAt(Instant addedAt) {
         this.addedAt = addedAt;
     }
 }

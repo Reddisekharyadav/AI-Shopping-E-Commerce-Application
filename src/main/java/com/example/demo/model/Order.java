@@ -1,38 +1,45 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-@Entity
-@Table(name = "orders")
+@Table("orders")
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @PrimaryKey
+    private UUID id;
 
-    @Column(nullable = false)
+    @Column
     private String username;
 
-    @Column(nullable = false)
+    @Column("product_title")
     private String productTitle;
 
-    @Column(nullable = false)
+    @Column("product_price")
     private Double productPrice;
 
-    @Column(length = 1000)
+    @Column("product_image")
     private String productImage;
 
+    @Column
     private String color;
+
+    @Column
     private String size;
+
+    @Column
     private Integer quantity = 1;
 
+    @Column("payment_method")
     private String paymentMethod;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status = OrderStatus.PENDING;
+    @Column
+    private String status = "PENDING";
 
-    @Column(name = "order_date")
+    @Column("order_date")
     private LocalDateTime orderDate = LocalDateTime.now();
 
     // Order status enum
@@ -42,10 +49,12 @@ public class Order {
 
     // Default constructor
     public Order() {
+        this.id = UUID.randomUUID();
     }
 
     // Constructor
     public Order(String username, String productTitle, Double productPrice, String productImage) {
+        this.id = UUID.randomUUID();
         this.username = username;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
@@ -54,11 +63,11 @@ public class Order {
     }
 
     // Getters and setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -126,11 +135,11 @@ public class Order {
         this.paymentMethod = paymentMethod;
     }
 
-    public OrderStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

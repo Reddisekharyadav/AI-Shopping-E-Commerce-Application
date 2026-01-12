@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.model.CartItem;
 import com.example.demo.repository.CartItemRepository;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,12 +23,12 @@ public class CartService {
         return repository.save(item);
     }
 
-    public void deleteItem(Long id) {
+    public void deleteItem(UUID id) {
         repository.deleteById(id);
     }
 
     // Added method to retrieve a CartItem by its ID
-    public CartItem getItemById(Long id) {
+    public CartItem getItemById(UUID id) {
         return repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("CartItem not found with id: " + id));
     }

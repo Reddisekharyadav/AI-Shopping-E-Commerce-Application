@@ -2,12 +2,13 @@ package com.example.demo;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 import com.example.demo.repository.OrderRepository;
-import com.example.demo.model.*; // Add this import if Order is in the same package, or adjust the package as needed
+import com.example.demo.model.*;
 
 @Service
 public class OrderService {
-    public Order getOrderById(Long id) {
+    public Order getOrderById(UUID id) {
         return orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Order not found"));
     }
 

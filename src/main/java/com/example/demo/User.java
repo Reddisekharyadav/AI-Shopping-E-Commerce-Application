@@ -1,32 +1,34 @@
 package com.example.demo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.Column;
+import java.util.UUID;
 
-@Entity
-@Table(name = "users")
-@Access(AccessType.FIELD)
+@Table("users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @PrimaryKey
+    private UUID id;
 
+    @Column
     private String username;
+
+    @Column
     private String password;
 
-    // Default constructor for JPA
+    // Default constructor for Cassandra
     public User() {
+        this.id = UUID.randomUUID();
     }
 
-    // Getter for id. No setter to prevent manual assignment.
-    public Long getId() {
+    // Getter for id
+    public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     // Getters and setters for other fields
