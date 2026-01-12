@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 
-@Configuration
-@Profile("prod")
-public class DatabaseConfig {
+// DISABLED: Migrated to Astra DB - PostgreSQL no longer used
+// @Configuration
+// @Profile("prod")
+public class DatabaseConfig_OLD_DISABLED {
 
     @Bean
     public DataSource dataSource() {
