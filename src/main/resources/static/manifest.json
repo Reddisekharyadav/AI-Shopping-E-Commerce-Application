@@ -1,0 +1,59 @@
+{
+  "name": "NextGenKart - AI Shopping",
+  "short_name": "NextGenKart",
+  "description": "AI-Powered E-Commerce Shopping Application",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "business"],
+  "screenshots": [
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Cart",
+      "short_name": "Cart",
+      "description": "Open shopping cart",
+      "url": "/cart",
+      "icons": [{ "src": "/images/logo.jpg", "sizes": "96x96" }]
+    },
+    {
+      "name": "My Orders",
+      "short_name": "Orders",
+      "description": "View your orders",
+      "url": "/orders",
+      "icons": [{ "src": "/images/logo.jpg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Profile",
+      "short_name": "Profile",
+      "description": "View your profile",
+      "url": "/Profile",
+      "icons": [{ "src": "/images/logo.jpg", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
