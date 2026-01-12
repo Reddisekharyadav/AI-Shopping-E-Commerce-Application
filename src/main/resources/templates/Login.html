@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#667eea">
@@ -13,6 +13,7 @@
     <!-- Manifest -->
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+    <link rel="apple-touch-icon" href="/images/logo.jpg">
     
     <title>NextGenKart - Login</title>
     <link rel="stylesheet" href="/responsive.css" th:href="@{/responsive.css}">
@@ -56,7 +57,13 @@
             text-align: center;
             color: #6a82fb;
         }
-
+        h1 {
+            text-align: center;
+            margin: 2rem 0;
+            color: #1e293b;
+            font-size: 3rem;
+            font-weight: bold;
+        }
         .glass-form {
             margin: 2rem auto;
             padding: 2rem;
@@ -64,12 +71,20 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+        }
+
+        .glass-form h2 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
         .glass-form label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: bold;
+            color: #1e293b;
         }
 
         .glass-form input[type="text"],
@@ -79,6 +94,13 @@
             margin-bottom: 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        .glass-form p {
+            color: #1e293b;
+            text-align: center;
         }
 
         .glass-form input[type="submit"] {
