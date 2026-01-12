@@ -1,45 +1,39 @@
 package com.example.demo.model;
 
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Table("orders")
+@Document(collection = "orders")
 public class Order {
 
-    @PrimaryKey
-    private UUID id;
+    @Id
+    private String id;
 
-    @Column
     private String username;
 
-    @Column("product_title")
+    @Field("product_title")
     private String productTitle;
 
-    @Column("product_price")
+    @Field("product_price")
     private Double productPrice;
 
-    @Column("product_image")
+    @Field("product_image")
     private String productImage;
 
-    @Column
     private String color;
 
-    @Column
     private String size;
 
-    @Column
     private Integer quantity = 1;
 
-    @Column("payment_method")
+    @Field("payment_method")
     private String paymentMethod;
 
-    @Column
     private String status = "PENDING";
 
-    @Column("order_date")
+    @Field("order_date")
     private LocalDateTime orderDate = LocalDateTime.now();
 
     // Order status enum
@@ -49,12 +43,10 @@ public class Order {
 
     // Default constructor
     public Order() {
-        this.id = UUID.randomUUID();
     }
 
     // Constructor
     public Order(String username, String productTitle, Double productPrice, String productImage) {
-        this.id = UUID.randomUUID();
         this.username = username;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
@@ -63,11 +55,11 @@ public class Order {
     }
 
     // Getters and setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

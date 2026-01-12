@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Contact - NextGenKart</title>
@@ -49,6 +49,11 @@
         background: rgba(255, 255, 255, 0.8);
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: #1e293b;
+      }
+
+      .glass-section h1, .glass-section h2 {
+        color: #1e293b;
       }
 
       .contact-table {
@@ -61,6 +66,7 @@
         border: 1px solid #ddd;
         padding: 0.75rem;
         text-align: left;
+        color: #1e293b;
       }
 
       .contact-table th {
@@ -108,7 +114,7 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
-        z-index: 1000;
+        z-index: 9999;
       }
 
       .chatbot-button {
@@ -218,7 +224,7 @@
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         display: none;
-        z-index: 1001;
+        z-index: 9998;
         overflow: hidden;
         border: 1px solid #e0e0e0;
       }
@@ -272,6 +278,7 @@
         background: #f8f9fa;
         font-size: 14px;
         line-height: 1.5;
+        color: #1e293b;
       }
 
       .chatbot-messages div {
@@ -280,6 +287,7 @@
         border-radius: 8px;
         max-width: 85%;
         word-wrap: break-word;
+        color: #1e293b;
       }
 
       .chatbot-messages div b {
@@ -290,11 +298,13 @@
         background: #e3f2fd;
         margin-left: auto;
         text-align: right;
+        color: #0d47a1;
       }
 
       .bot-message {
         background: #f0f0f0;
         margin-right: auto;
+        color: #1e293b;
       }
 
       .error-message {
@@ -319,6 +329,7 @@
         outline: none;
         font-size: 14px;
         transition: border-color 0.3s;
+        color: #1e293b;
       }
 
       .chatbot-input:focus {

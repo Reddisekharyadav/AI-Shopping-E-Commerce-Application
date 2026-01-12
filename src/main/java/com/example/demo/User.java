@@ -1,33 +1,30 @@
 package com.example.demo;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.Column;
-import java.util.UUID;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
-@Table("users")
+@Document(collection = "users")
 public class User {
 
-    @PrimaryKey
-    private UUID id;
+    @Id
+    private String id;
 
-    @Column
+    @Indexed(unique = true)
     private String username;
 
-    @Column
     private String password;
 
-    // Default constructor for Cassandra
+    // Default constructor
     public User() {
-        this.id = UUID.randomUUID();
     }
 
     // Getter for id
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

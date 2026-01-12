@@ -8,7 +8,6 @@ import com.example.demo.repository.OrderRepository;
 import com.example.demo.service.ClothesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import java.util.UUID;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
@@ -241,7 +240,7 @@ public class DemoController {
     }
 
     @PostMapping("/cart/delete")
-    public String deleteCartItem(@RequestParam UUID id, HttpSession session) {
+    public String deleteCartItem(@RequestParam String id, HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
             return "redirect:/Login";

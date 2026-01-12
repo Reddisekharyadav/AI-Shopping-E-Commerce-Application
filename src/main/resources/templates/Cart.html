@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Shopping Cart - NextGenKart</title>
@@ -668,12 +668,12 @@
       <div th:if="${#lists.isEmpty(cartItems)}" class="empty-cart">
         <p>Your cart is empty!</p>
         <div class="continue-shopping">
-          <a class="nav-btn" th:href="@{/}">Continue Shopping</a>
+          <a class="nav-btn" th:href="@{/home}">Continue Shopping</a>
         </div>
       </div>
       
       <div th:unless="${#lists.isEmpty(cartItems)}" class="continue-shopping">
-        <a class="nav-btn" th:href="@{/}">Continue Shopping</a>
+        <a class="nav-btn" th:href="@{/home}">Continue Shopping</a>
       </div>
     </div>
 

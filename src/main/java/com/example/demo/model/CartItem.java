@@ -1,62 +1,55 @@
 package com.example.demo.model;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.Column;
-import java.time.Instant;
-import java.util.UUID;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import java.time.LocalDateTime;
 
-@Table("cart_items")
+@Document(collection = "cart_items")
 public class CartItem {
 
-    @PrimaryKey
-    private UUID id;
+    @Id
+    private String id;
 
-    @Column("username")
     private String username;
 
-    @Column("product_title")
+    @Field("product_title")
     private String productTitle;
 
-    @Column("product_price")
+    @Field("product_price")
     private Double productPrice;
 
-    @Column("product_image")
+    @Field("product_image")
     private String productImage;
 
-    @Column
     private String color;
 
-    @Column
     private String size;
 
-    @Column
     private Integer quantity = 1;
 
-    @Column("added_at")
-    private Instant addedAt = Instant.now();
+    @Field("added_at")
+    private LocalDateTime addedAt = LocalDateTime.now();
 
     // Default constructor
     public CartItem() {
-        this.id = UUID.randomUUID();
     }
 
     // Constructor
     public CartItem(String username, String productTitle, Double productPrice, String productImage) {
-        this.id = UUID.randomUUID();
         this.username = username;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
         this.productImage = productImage;
-        this.addedAt = Instant.now();
+        this.addedAt = LocalDateTime.now();
     }
 
     // Getters and setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -116,11 +109,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Instant getAddedAt() {
+    public LocalDateTime getAddedAt() {
         return addedAt;
     }
 
-    public void setAddedAt(Instant addedAt) {
+    public void setAddedAt(LocalDateTime addedAt) {
         this.addedAt = addedAt;
     }
 }
