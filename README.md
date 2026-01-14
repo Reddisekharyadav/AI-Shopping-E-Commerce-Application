@@ -9,46 +9,126 @@ The app is hosted on Render's free tier, which means:
 - **Subsequent visits:** Instant loading ⚡
 - The server sleeps after 15 minutes of inactivity
 
-### 🔧 Speed Optimization Options
+🛒 AI Shopping – NextGen E-Commerce Application
+🚀 Live Demo
 
-#### Option 1: Keep-Alive Service (Free)
-Use a free cron service to ping your app every 10 minutes:
-- **UptimeRobot** (https://uptimerobot.com) - Free tier: 50 monitors
-- **Cron-job.org** (https://cron-job.org) - Free unlimited cron jobs
+URL: https://nextgenkart-app.onrender.com
 
-**Setup on UptimeRobot:**
-1. Create free account
-2. Add Monitor → HTTP(s)
-3. URL: `https://nextgenkart-app.onrender.com`
-4. Interval: 5 minutes
-5. Save
+⚡ First Visit Loading Time Notice
 
-#### Option 2: Upgrade Render Plan
-- **Starter Plan:** $7/month - Always on, no cold starts
-- **Standard Plan:** $25/month - Better performance
+This application is hosted on Render Free Tier, which has cold starts:
 
-## Overview
-AI Shopping is a modern e-commerce web application built with Spring Boot, Thymeleaf, and Java. It features user authentication, product browsing, cart management, order history, payment integration, and an AI-powered chatbot for enhanced shopping experience.
+First visit: ~30–60 seconds (server wakes up)
 
-## Features
-- User registration and login
-- Profile management with profile picture
-- Product catalog and search
-- Shopping cart and order management
-- Payment gateway integration
-- Order history and feedback
-- AI-powered chatbot for customer support
-- Responsive UI with professional CSS and animations
+Subsequent visits: Instant ⚡
 
-## Technologies Used
-- Java 17+
-- Spring Boot
-- Thymeleaf
-- Hibernate/JPA
-- MySQL/SQLite (database)
-- HTML5, CSS3, JavaScript
-- Framer Motion (for animations)
+Server sleeps after 15 minutes of inactivity
 
+🔧 Avoid Cold Starts (Optional)
+Option 1: Keep-Alive (Free)
+
+Use a free uptime service to ping the app:
+
+UptimeRobot: https://uptimerobot.com
+
+Cron-job.org: https://cron-job.org
+
+UptimeRobot Setup
+
+Create free account
+
+Add Monitor → HTTP(s)
+
+URL: https://nextgenkart-app.onrender.com
+
+Interval: 5 minutes
+
+Save
+
+Option 2: Upgrade Render Plan
+
+Starter: $7/month – Always on
+
+Standard: $25/month – Better performance
+
+📌 Overview
+
+AI Shopping is a modern, cloud-ready AI-powered e-commerce web application built using Spring Boot and MongoDB Atlas.
+It supports user authentication, product browsing, cart management, secure payments, order history, and an AI chatbot to enhance the shopping experience.
+
+The application is fully cloud-based, scalable, and accessible from anywhere in the world.
+
+✨ Features
+
+User registration & login
+
+Secure profile management with profile picture
+
+Product catalog & search
+
+Shopping cart & order processing
+
+Payment gateway integration
+
+Order history & feedback system
+
+AI-powered chatbot for customer support
+
+Virtual dressing / recommendation features
+
+Responsive UI with modern animations
+
+Cloud database (MongoDB Atlas)
+
+🗄️ Database: MongoDB Atlas (Cloud)
+🔄 Migration Update
+
+The project has been migrated from local SQL databases (MySQL/SQLite) to MongoDB Atlas, enabling:
+
+🌍 Global accessibility for all users
+
+☁️ Fully managed cloud storage
+
+🔐 Secure connections & authentication
+
+🚀 Better scalability and performance
+
+✅ Benefits
+
+No local DB setup required
+
+Automatic backups & monitoring
+
+High availability
+
+Ideal for cloud deployment (Render, AWS, etc.)
+
+🧰 Technologies Used
+Backend
+
+Java 17+
+
+Spring Boot
+
+Spring Data MongoDB
+
+MongoDB Atlas (Cloud)
+
+Frontend
+
+Thymeleaf
+
+HTML5, CSS3, JavaScript
+
+Framer Motion (animations)
+
+Tools & DevOps
+
+Maven
+
+Git & GitHub
+
+Render (Deployment)
 ## Project Structure
 ```
 AI-Shopping-E-Commerce-Application/
@@ -124,38 +204,98 @@ AI-Shopping-E-Commerce-Application/
     └── test-classes/                   # Compiled test classes
 ```
 
-## Getting Started
-### Prerequisites
-- Java 17 or higher
-- Maven
-- MySQL or SQLite (or update DB config in `application.properties`)
+⚙️ MongoDB Atlas Configuration
+1️⃣ Create MongoDB Atlas Cluster
 
-### Setup & Run
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Reddisekharyadav/AI-Shopping-E-Commerce-Application.git
-   cd AI-Shopping-E-Commerce-Application
-   ```
-2. Configure the database in `src/main/resources/application.properties`.
-3. Build and run the application:
-   ```sh
-   mvn clean install
-   mvn spring-boot:run
-   ```
-4. Access the app at `http://localhost:8080`
+Visit https://www.mongodb.com/atlas
 
-## Usage
-- Register a new user or log in with existing credentials.
-- Browse products, add to cart, and proceed to checkout.
-- Use the chatbot for assistance.
-- View and update your profile, order history, and provide feedback.
+Create a free M0 cluster
 
-## Contributing
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+Create a database user
 
-## License
+Add IP Access:
+
+0.0.0.0/0
+
+2️⃣ Update application.properties
+spring.data.mongodb.uri=mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/nextgenkart
+spring.data.mongodb.database=nextgenkart
+
+
+🔐 Security Tip:
+Use environment variables in production instead of hard-coding credentials.
+
+3️⃣ Maven Dependency
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+
+▶️ Getting Started (Local Setup)
+Prerequisites
+
+Java 17+
+
+Maven
+
+MongoDB Atlas account
+
+Steps
+git clone https://github.com/Reddisekharyadav/AI-Shopping-E-Commerce-Application.git
+cd AI-Shopping-E-Commerce-Application
+mvn clean install
+mvn spring-boot:run
+
+
+Access the app at:
+
+http://localhost:8080
+
+🧑‍💻 Usage
+
+Register or log in
+
+Browse products & add to cart
+
+Complete payment
+
+View order history
+
+Use AI chatbot for assistance
+
+Manage profile & feedback
+
+☁️ Cloud Deployment
+
+This application is cloud-ready and works seamlessly with:
+
+Render
+
+AWS
+
+Azure
+
+Any Docker-based environment
+
+MongoDB Atlas ensures persistent, globally accessible data.
+
+🤝 Contributing
+
+Contributions are welcome!
+
+Fork the repository
+
+Create a feature branch
+
+Commit changes
+
+Open a Pull Request
+
+📜 License
+
 This project is licensed under the MIT License.
 
-## Author
-- Reddisekharyadav
-- [GitHub](https://github.com/Reddisekharyadav)
+👤 Author
+
+Reddisekharyadav
+🔗 GitHub: https://github.com/Reddisekharyadav)
